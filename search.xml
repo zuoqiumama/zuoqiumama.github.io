@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JAVA XML文件读写（1）</title>
-    <url>/2021/03/16/JAVA%20XML%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>昨天晚上浪费时间搞了一晚上的安卓开发环境<br>本来下个加速器就能完事的我TM东搞西搞搞了将近3个小时<br>安卓等学到JAVA WEB的时候一起看好了，现在先把进阶学完<br>明天尽可能学到多线程QAQ，<br>书我是一点都看不进去了中文翻译的太离谱了</p>
-<span id="more"></span>
-<h1 id="JAVA-XML文件读写（1）"><a href="#JAVA-XML文件读写（1）" class="headerlink" title="JAVA XML文件读写（1）"></a>JAVA XML文件读写（1）</h1><p>XML文件样式</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">document</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">element</span> <span class="attr">type</span>=<span class="string">&quot;paragraph&quot;</span>&gt;</span></span><br><span class="line">        try1</span><br><span class="line">        <span class="tag">&lt;<span class="name">object</span> <span class="attr">maybeType</span>=<span class="string">&quot;objectType&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span>&gt;</span>textNode1<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">element</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">document</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><del>(用自己写的XML程序写的)</del></p>
-<p>XML文件用3种读写方法：</p>
-<h4 id="DOM方法"><a href="#DOM方法" class="headerlink" title="DOM方法"></a>DOM方法</h4><p>适合读也适合写（也许是，懒得回去看视频了）</p>
-<h4 id="SAX-amp-Stax方法"><a href="#SAX-amp-Stax方法" class="headerlink" title="SAX&amp;Stax方法"></a>SAX&amp;Stax方法</h4><p>用流方法适合读占内存大的XML文件（没学呢没学呢效率过于低下了</p>
-<p>今天就实践了一种DOM方法写文件：主要；</p>
-<p>首先要写XML就得用Java带的Document创建一个XML文件的根</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//文件创建的初始化</span></span><br><span class="line">DocumentBuilder documentBuilder =DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.newDocument();<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
-
-<p>意思就是用工厂方法调用一连串的函数创造一个document这个根</p>
-<p>然后就是创建XML文件的主要框架了</p>
-<p>框架里由一个个元素Element构成，首先就是创建元素，不过在这之前要检查一下这个document有没有创建成功</p>
-<p>（不知道为什么要检查，感觉这种包内部出错的就应该把写这些的拖出去祭天）（每准几年后我会改变这种想法）</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创造XML中的标签</span></span><br><span class="line">Element docx = document.createElement(<span class="string">&quot;document&quot;</span>);</span><br><span class="line">Element element = document.createElement(<span class="string">&quot;element&quot;</span>);</span><br><span class="line">Element obj = document.createElement(<span class="string">&quot;object&quot;</span>);</span><br><span class="line">Element text = document.createElement(<span class="string">&quot;text&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这些创建的也就是&lt;&gt;里面的东西了，也就是表明后面text属性的（网课里这么说的</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对每个标签附加属性名和属性</span></span><br><span class="line">element.setAttribute(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;paragraph&quot;</span>);</span><br><span class="line">obj.setAttribute(<span class="string">&quot;maybeType&quot;</span>, <span class="string">&quot;objectType&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这个让标签附加上属性名和属性，属性用“”控制赋给属性</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对某一个标签添加text内容</span></span><br><span class="line">text.appendChild(document.createTextNode(<span class="string">&quot;textNode1&quot;</span>));</span><br><span class="line">element.appendChild(document.createTextNode(<span class="string">&quot;try1&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-<p>这个可以给某个标签下添加<del>文件说明</del></p>
-<p><del>某个类似text说明的我不清楚是什么可能网课放的时候开小差了我</del></p>
-<p>真的不知道是什么具体可以看看上面最终成果</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//确定树形结构</span></span><br><span class="line">obj.appendChild(text);</span><br><span class="line">element.appendChild(obj);</span><br><span class="line">docx.appendChild(element);</span><br><span class="line">document.appendChild(docx);</span><br></pre></td></tr></table></figure>
-
-<p>这个就是很简单的树状结构确定了</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//也许是XML转换器；</span></span><br><span class="line">Transformer transformer = TransformerFactory.newInstance().newTransformer();</span><br><span class="line"><span class="comment">//将文件根放入</span></span><br><span class="line">DOMSource source = <span class="keyword">new</span> DOMSource(document);</span><br><span class="line">File file = <span class="keyword">new</span> File(<span class="string">&quot;XML_result.xml&quot;</span>);</span><br><span class="line">StreamResult result = <span class="keyword">new</span> StreamResult(file);</span><br><span class="line">transformer.transform(source, result);</span><br></pre></td></tr></table></figure>
-
-<p>这个就是把确定好的树状结构的根放给DOM源，然后这个源用transform输出给文件</p>
-<p>以上就是写XML了</p>
-<p>下面是读</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.parse(<span class="string">&quot;XML_result.xml&quot;</span>);<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
-
-<p>这个就是读取文件了，可以这之后检查一下有没有读到文件。</p>
-<p>（我因为打印结果的函数调用错了没有输出我想要的内容所以一直输出NULL 我还以为文件读取失败了（虽然由Throw））</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">if</span>(document!=<span class="keyword">null</span>) &#123;</span><br><span class="line">        NodeList nodeList = document.getChildNodes();</span><br><span class="line">        System.out.println(nodeList.getLength());</span><br><span class="line"></span><br><span class="line">        Node node = nodeList.item(<span class="number">0</span>);</span><br><span class="line">        System.out.println(node.getNodeName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;cant read&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>也许用try-catch更好一点，但是我Throw了</p>
-<p>NodeList nodeList = document.getChildNodes();</p>
-<p>这个用来获取当前节点的所有子节点</p>
-<p>大概就是以上内容了学的真的有点慢，两个小时的时间除了看网课花了将近半个小时，写Blog花了半个小时，真正写代码的时间整整1H就写了这么点QAQ还都是自己打的时候什么都会，打一点看一下源代码。</p>
-<h3 id="下次努力"><a href="#下次努力" class="headerlink" title="下次努力"></a>下次努力</h3>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>XML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android基础</title>
     <url>/2021/04/06/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<p>终于开始安卓学习了<br>接受了一晚上地焦虑信息输入，下次Kotlin和Flutter要一起加油了<br>做了很多工具式的事情，弄了些插件学了些使用方法现在感觉敲代码更加快乐了<br>想要快点开发一个自己的APP嘻嘻虽然不知道要搞什么<br>JAVA也要准备学习WEB内容了<br>不过这之前先在这个周末把数据库编程学了<br>可恶中午午觉起来去图书馆自习突然发现图书馆不能刷手机进去了要一卡通<br>还走了好多路呢</p>
@@ -120,6 +63,56 @@
       </categories>
       <tags>
         <tag>-Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JAVA 网络编程</title>
+    <url>/2021/03/22/JAVA%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<p>再不写Blog我就都快忘记我学什么了。<br>安卓还没开始学QAQ<br>我明天白天要把多线程的书看完。<br>晚上继续学网课，在周末之前学完网课<br>体育要拍视频作业QAQAQAQAQAQAQAQAQAQAQ<br>网络编程写玩了是不是可以用SWING写个聊天软件？</p>
+<span id="more"></span>
+<h1 id="JAVA-网络编程"><a href="#JAVA-网络编程" class="headerlink" title="JAVA 网络编程"></a>JAVA 网络编程</h1><h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><p>很简单快捷的，不需要很好的网络条件进行//网课好像是这么描述的</p>
+<p>冷知识：QQ一开始是UDP来的</p>
+<p>这个只需要打开网络通道</p>
+<p>数据打包发送</p>
+<p>接受数据就可以了</p>
+<p>具体如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DatagramSocket datagramSocket = <span class="keyword">new</span> DatagramSocket(<span class="number">3000</span>);</span><br><span class="line"><span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">DatagramPacket datagramPacket = <span class="keyword">new</span> DatagramPacket(buf,<span class="number">1024</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Socket打开了网络通道，端口是3000；</p>
+<p>然后Packet存储的数据流在byte数组里</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">datagramSocket.receive(datagramPacket);</span><br></pre></td></tr></table></figure>
+
+<p>将连接的端发来的数据放入Packet里。</p>
+<p>然后对这个包进行操作就可以了</p>
+<p>发送数据就</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">datagramSocket.send(datagramPacket1);</span><br></pre></td></tr></table></figure>
+
+<p>这个就能发送了。</p>
+<p>另外一个顺序反过来就可以进行双向交替进行。</p>
+<p>启动这个建议先启动接收端，不然发送端先发送后，接收端没启动可能数据会丢失</p>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>这个网络相率更高，但是成本高，安全</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader bufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(socket.getInputStream()));</span><br><span class="line">DataOutputStream dos =  <span class="keyword">new</span> DataOutputStream(socket.getOutputStream());</span><br></pre></td></tr></table></figure>
+
+<p>这个创建输入流和输出流的读取器</p>
+<p>服务器启动后，客户和服务器的输入输出流是相互的。</p>
+<p>然后对输入输出流进行操作就可以了。</p>
+<p>采用多线程就可以一个服务器对多个人了（也许是多线程实现的）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ServerSocket serverSocket = <span class="keyword">new</span> ServerSocket(<span class="number">8001</span>);</span><br><span class="line"><span class="comment">//ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(6);</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">    Socket socket = serverSocket.accept();</span><br><span class="line">    System.out.println(<span class="string">&quot;come to a client&quot;</span>+socket.getInetAddress().getHostAddress());</span><br><span class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> TcpClient(socket)).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本来是打算用excutor实现固定线程实现的。因为线程不固定，大量用户访问会对服务器造成伤害</p>
+<p>而客户端只需要在来个输入流取向系统输入就可以了，这样用系统输入操作完就交给输出流发送给服务器，服务器再读取输入流。</p>
+<p>下面是客户端</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Socket socket = <span class="keyword">new</span> Socket(InetAddress.getByName(<span class="string">&quot;127.0.0.1&quot;</span>),<span class="number">8001</span>);</span><br><span class="line"></span><br><span class="line">        BufferedReader bufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(socket.getInputStream()));</span><br><span class="line">        DataOutputStream dataOutputStream = <span class="keyword">new</span> DataOutputStream(socket.getOutputStream());</span><br><span class="line"></span><br><span class="line">        BufferedReader bufferedReaderByKey = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            String readLine = bufferedReaderByKey.readLine();</span><br><span class="line">            <span class="keyword">if</span>(readLine.equalsIgnoreCase(<span class="string">&quot;quit&quot;</span>))&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;I said &quot;</span>+readLine);</span><br><span class="line">            dataOutputStream.writeBytes(readLine+System.getProperty(<span class="string">&quot;line.separator&quot;</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;System said &quot;</span>+bufferedReader.readLine());</span><br><span class="line">        &#125;</span><br><span class="line">        bufferedReader.close();</span><br><span class="line">        bufferedReaderByKey.close();</span><br><span class="line">        dataOutputStream.close();</span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>好了好像就学了这些？可能只前学的没有记住。</p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>网络编程</tag>
       </tags>
   </entry>
   <entry>
@@ -233,53 +226,60 @@
       </tags>
   </entry>
   <entry>
-    <title>JAVA 网络编程</title>
-    <url>/2021/03/22/JAVA%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
-    <content><![CDATA[<p>再不写Blog我就都快忘记我学什么了。<br>安卓还没开始学QAQ<br>我明天白天要把多线程的书看完。<br>晚上继续学网课，在周末之前学完网课<br>体育要拍视频作业QAQAQAQAQAQAQAQAQAQAQ<br>网络编程写玩了是不是可以用SWING写个聊天软件？</p>
+    <title>JAVA XML文件读写（1）</title>
+    <url>/2021/03/16/JAVA%20XML%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>昨天晚上浪费时间搞了一晚上的安卓开发环境<br>本来下个加速器就能完事的我TM东搞西搞搞了将近3个小时<br>安卓等学到JAVA WEB的时候一起看好了，现在先把进阶学完<br>明天尽可能学到多线程QAQ，<br>书我是一点都看不进去了中文翻译的太离谱了</p>
 <span id="more"></span>
-<h1 id="JAVA-网络编程"><a href="#JAVA-网络编程" class="headerlink" title="JAVA 网络编程"></a>JAVA 网络编程</h1><h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><p>很简单快捷的，不需要很好的网络条件进行//网课好像是这么描述的</p>
-<p>冷知识：QQ一开始是UDP来的</p>
-<p>这个只需要打开网络通道</p>
-<p>数据打包发送</p>
-<p>接受数据就可以了</p>
-<p>具体如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DatagramSocket datagramSocket = <span class="keyword">new</span> DatagramSocket(<span class="number">3000</span>);</span><br><span class="line"><span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">DatagramPacket datagramPacket = <span class="keyword">new</span> DatagramPacket(buf,<span class="number">1024</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="JAVA-XML文件读写（1）"><a href="#JAVA-XML文件读写（1）" class="headerlink" title="JAVA XML文件读写（1）"></a>JAVA XML文件读写（1）</h1><p>XML文件样式</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">document</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">element</span> <span class="attr">type</span>=<span class="string">&quot;paragraph&quot;</span>&gt;</span></span><br><span class="line">        try1</span><br><span class="line">        <span class="tag">&lt;<span class="name">object</span> <span class="attr">maybeType</span>=<span class="string">&quot;objectType&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span>&gt;</span>textNode1<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">element</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">document</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>Socket打开了网络通道，端口是3000；</p>
-<p>然后Packet存储的数据流在byte数组里</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">datagramSocket.receive(datagramPacket);</span><br></pre></td></tr></table></figure>
+<p><del>(用自己写的XML程序写的)</del></p>
+<p>XML文件用3种读写方法：</p>
+<h4 id="DOM方法"><a href="#DOM方法" class="headerlink" title="DOM方法"></a>DOM方法</h4><p>适合读也适合写（也许是，懒得回去看视频了）</p>
+<h4 id="SAX-amp-Stax方法"><a href="#SAX-amp-Stax方法" class="headerlink" title="SAX&amp;Stax方法"></a>SAX&amp;Stax方法</h4><p>用流方法适合读占内存大的XML文件（没学呢没学呢效率过于低下了</p>
+<p>今天就实践了一种DOM方法写文件：主要；</p>
+<p>首先要写XML就得用Java带的Document创建一个XML文件的根</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//文件创建的初始化</span></span><br><span class="line">DocumentBuilder documentBuilder =DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.newDocument();<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
 
-<p>将连接的端发来的数据放入Packet里。</p>
-<p>然后对这个包进行操作就可以了</p>
-<p>发送数据就</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">datagramSocket.send(datagramPacket1);</span><br></pre></td></tr></table></figure>
+<p>意思就是用工厂方法调用一连串的函数创造一个document这个根</p>
+<p>然后就是创建XML文件的主要框架了</p>
+<p>框架里由一个个元素Element构成，首先就是创建元素，不过在这之前要检查一下这个document有没有创建成功</p>
+<p>（不知道为什么要检查，感觉这种包内部出错的就应该把写这些的拖出去祭天）（每准几年后我会改变这种想法）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创造XML中的标签</span></span><br><span class="line">Element docx = document.createElement(<span class="string">&quot;document&quot;</span>);</span><br><span class="line">Element element = document.createElement(<span class="string">&quot;element&quot;</span>);</span><br><span class="line">Element obj = document.createElement(<span class="string">&quot;object&quot;</span>);</span><br><span class="line">Element text = document.createElement(<span class="string">&quot;text&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<p>这个就能发送了。</p>
-<p>另外一个顺序反过来就可以进行双向交替进行。</p>
-<p>启动这个建议先启动接收端，不然发送端先发送后，接收端没启动可能数据会丢失</p>
-<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>这个网络相率更高，但是成本高，安全</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader bufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(socket.getInputStream()));</span><br><span class="line">DataOutputStream dos =  <span class="keyword">new</span> DataOutputStream(socket.getOutputStream());</span><br></pre></td></tr></table></figure>
+<p>这些创建的也就是&lt;&gt;里面的东西了，也就是表明后面text属性的（网课里这么说的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对每个标签附加属性名和属性</span></span><br><span class="line">element.setAttribute(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;paragraph&quot;</span>);</span><br><span class="line">obj.setAttribute(<span class="string">&quot;maybeType&quot;</span>, <span class="string">&quot;objectType&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<p>这个创建输入流和输出流的读取器</p>
-<p>服务器启动后，客户和服务器的输入输出流是相互的。</p>
-<p>然后对输入输出流进行操作就可以了。</p>
-<p>采用多线程就可以一个服务器对多个人了（也许是多线程实现的）</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ServerSocket serverSocket = <span class="keyword">new</span> ServerSocket(<span class="number">8001</span>);</span><br><span class="line"><span class="comment">//ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(6);</span></span><br></pre></td></tr></table></figure>
+<p>这个让标签附加上属性名和属性，属性用“”控制赋给属性</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对某一个标签添加text内容</span></span><br><span class="line">text.appendChild(document.createTextNode(<span class="string">&quot;textNode1&quot;</span>));</span><br><span class="line">element.appendChild(document.createTextNode(<span class="string">&quot;try1&quot;</span>));</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">    Socket socket = serverSocket.accept();</span><br><span class="line">    System.out.println(<span class="string">&quot;come to a client&quot;</span>+socket.getInetAddress().getHostAddress());</span><br><span class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> TcpClient(socket)).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个可以给某个标签下添加<del>文件说明</del></p>
+<p><del>某个类似text说明的我不清楚是什么可能网课放的时候开小差了我</del></p>
+<p>真的不知道是什么具体可以看看上面最终成果</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//确定树形结构</span></span><br><span class="line">obj.appendChild(text);</span><br><span class="line">element.appendChild(obj);</span><br><span class="line">docx.appendChild(element);</span><br><span class="line">document.appendChild(docx);</span><br></pre></td></tr></table></figure>
 
-<p>本来是打算用excutor实现固定线程实现的。因为线程不固定，大量用户访问会对服务器造成伤害</p>
-<p>而客户端只需要在来个输入流取向系统输入就可以了，这样用系统输入操作完就交给输出流发送给服务器，服务器再读取输入流。</p>
-<p>下面是客户端</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Socket socket = <span class="keyword">new</span> Socket(InetAddress.getByName(<span class="string">&quot;127.0.0.1&quot;</span>),<span class="number">8001</span>);</span><br><span class="line"></span><br><span class="line">        BufferedReader bufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(socket.getInputStream()));</span><br><span class="line">        DataOutputStream dataOutputStream = <span class="keyword">new</span> DataOutputStream(socket.getOutputStream());</span><br><span class="line"></span><br><span class="line">        BufferedReader bufferedReaderByKey = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            String readLine = bufferedReaderByKey.readLine();</span><br><span class="line">            <span class="keyword">if</span>(readLine.equalsIgnoreCase(<span class="string">&quot;quit&quot;</span>))&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;I said &quot;</span>+readLine);</span><br><span class="line">            dataOutputStream.writeBytes(readLine+System.getProperty(<span class="string">&quot;line.separator&quot;</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;System said &quot;</span>+bufferedReader.readLine());</span><br><span class="line">        &#125;</span><br><span class="line">        bufferedReader.close();</span><br><span class="line">        bufferedReaderByKey.close();</span><br><span class="line">        dataOutputStream.close();</span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就是很简单的树状结构确定了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//也许是XML转换器；</span></span><br><span class="line">Transformer transformer = TransformerFactory.newInstance().newTransformer();</span><br><span class="line"><span class="comment">//将文件根放入</span></span><br><span class="line">DOMSource source = <span class="keyword">new</span> DOMSource(document);</span><br><span class="line">File file = <span class="keyword">new</span> File(<span class="string">&quot;XML_result.xml&quot;</span>);</span><br><span class="line">StreamResult result = <span class="keyword">new</span> StreamResult(file);</span><br><span class="line">transformer.transform(source, result);</span><br></pre></td></tr></table></figure>
 
-<p>好了好像就学了这些？可能只前学的没有记住。</p>
-]]></content>
+<p>这个就是把确定好的树状结构的根放给DOM源，然后这个源用transform输出给文件</p>
+<p>以上就是写XML了</p>
+<p>下面是读</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.parse(<span class="string">&quot;XML_result.xml&quot;</span>);<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
+
+<p>这个就是读取文件了，可以这之后检查一下有没有读到文件。</p>
+<p>（我因为打印结果的函数调用错了没有输出我想要的内容所以一直输出NULL 我还以为文件读取失败了（虽然由Throw））</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">if</span>(document!=<span class="keyword">null</span>) &#123;</span><br><span class="line">        NodeList nodeList = document.getChildNodes();</span><br><span class="line">        System.out.println(nodeList.getLength());</span><br><span class="line"></span><br><span class="line">        Node node = nodeList.item(<span class="number">0</span>);</span><br><span class="line">        System.out.println(node.getNodeName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;cant read&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也许用try-catch更好一点，但是我Throw了</p>
+<p>NodeList nodeList = document.getChildNodes();</p>
+<p>这个用来获取当前节点的所有子节点</p>
+<p>大概就是以上内容了学的真的有点慢，两个小时的时间除了看网课花了将近半个小时，写Blog花了半个小时，真正写代码的时间整整1H就写了这么点QAQ还都是自己打的时候什么都会，打一点看一下源代码。</p>
+<h3 id="下次努力"><a href="#下次努力" class="headerlink" title="下次努力"></a>下次努力</h3>]]></content>
       <categories>
         <category>JAVA</category>
       </categories>
       <tags>
-        <tag>网络编程</tag>
+        <tag>XML</tag>
       </tags>
   </entry>
   <entry>
