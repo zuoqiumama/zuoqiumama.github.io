@@ -66,63 +66,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JAVA XML文件读写（1）</title>
-    <url>/2021/03/16/JAVA%20XML%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>昨天晚上浪费时间搞了一晚上的安卓开发环境<br>本来下个加速器就能完事的我TM东搞西搞搞了将近3个小时<br>安卓等学到JAVA WEB的时候一起看好了，现在先把进阶学完<br>明天尽可能学到多线程QAQ，<br>书我是一点都看不进去了中文翻译的太离谱了</p>
-<span id="more"></span>
-<h1 id="JAVA-XML文件读写（1）"><a href="#JAVA-XML文件读写（1）" class="headerlink" title="JAVA XML文件读写（1）"></a>JAVA XML文件读写（1）</h1><p>XML文件样式</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">document</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">element</span> <span class="attr">type</span>=<span class="string">&quot;paragraph&quot;</span>&gt;</span></span><br><span class="line">        try1</span><br><span class="line">        <span class="tag">&lt;<span class="name">object</span> <span class="attr">maybeType</span>=<span class="string">&quot;objectType&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span>&gt;</span>textNode1<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">element</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">document</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><del>(用自己写的XML程序写的)</del></p>
-<p>XML文件用3种读写方法：</p>
-<h4 id="DOM方法"><a href="#DOM方法" class="headerlink" title="DOM方法"></a>DOM方法</h4><p>适合读也适合写（也许是，懒得回去看视频了）</p>
-<h4 id="SAX-amp-Stax方法"><a href="#SAX-amp-Stax方法" class="headerlink" title="SAX&amp;Stax方法"></a>SAX&amp;Stax方法</h4><p>用流方法适合读占内存大的XML文件（没学呢没学呢效率过于低下了</p>
-<p>今天就实践了一种DOM方法写文件：主要；</p>
-<p>首先要写XML就得用Java带的Document创建一个XML文件的根</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//文件创建的初始化</span></span><br><span class="line">DocumentBuilder documentBuilder =DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.newDocument();<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
-
-<p>意思就是用工厂方法调用一连串的函数创造一个document这个根</p>
-<p>然后就是创建XML文件的主要框架了</p>
-<p>框架里由一个个元素Element构成，首先就是创建元素，不过在这之前要检查一下这个document有没有创建成功</p>
-<p>（不知道为什么要检查，感觉这种包内部出错的就应该把写这些的拖出去祭天）（每准几年后我会改变这种想法）</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创造XML中的标签</span></span><br><span class="line">Element docx = document.createElement(<span class="string">&quot;document&quot;</span>);</span><br><span class="line">Element element = document.createElement(<span class="string">&quot;element&quot;</span>);</span><br><span class="line">Element obj = document.createElement(<span class="string">&quot;object&quot;</span>);</span><br><span class="line">Element text = document.createElement(<span class="string">&quot;text&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这些创建的也就是&lt;&gt;里面的东西了，也就是表明后面text属性的（网课里这么说的</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对每个标签附加属性名和属性</span></span><br><span class="line">element.setAttribute(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;paragraph&quot;</span>);</span><br><span class="line">obj.setAttribute(<span class="string">&quot;maybeType&quot;</span>, <span class="string">&quot;objectType&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这个让标签附加上属性名和属性，属性用“”控制赋给属性</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对某一个标签添加text内容</span></span><br><span class="line">text.appendChild(document.createTextNode(<span class="string">&quot;textNode1&quot;</span>));</span><br><span class="line">element.appendChild(document.createTextNode(<span class="string">&quot;try1&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-<p>这个可以给某个标签下添加<del>文件说明</del></p>
-<p><del>某个类似text说明的我不清楚是什么可能网课放的时候开小差了我</del></p>
-<p>真的不知道是什么具体可以看看上面最终成果</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//确定树形结构</span></span><br><span class="line">obj.appendChild(text);</span><br><span class="line">element.appendChild(obj);</span><br><span class="line">docx.appendChild(element);</span><br><span class="line">document.appendChild(docx);</span><br></pre></td></tr></table></figure>
-
-<p>这个就是很简单的树状结构确定了</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//也许是XML转换器；</span></span><br><span class="line">Transformer transformer = TransformerFactory.newInstance().newTransformer();</span><br><span class="line"><span class="comment">//将文件根放入</span></span><br><span class="line">DOMSource source = <span class="keyword">new</span> DOMSource(document);</span><br><span class="line">File file = <span class="keyword">new</span> File(<span class="string">&quot;XML_result.xml&quot;</span>);</span><br><span class="line">StreamResult result = <span class="keyword">new</span> StreamResult(file);</span><br><span class="line">transformer.transform(source, result);</span><br></pre></td></tr></table></figure>
-
-<p>这个就是把确定好的树状结构的根放给DOM源，然后这个源用transform输出给文件</p>
-<p>以上就是写XML了</p>
-<p>下面是读</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.parse(<span class="string">&quot;XML_result.xml&quot;</span>);<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
-
-<p>这个就是读取文件了，可以这之后检查一下有没有读到文件。</p>
-<p>（我因为打印结果的函数调用错了没有输出我想要的内容所以一直输出NULL 我还以为文件读取失败了（虽然由Throw））</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">if</span>(document!=<span class="keyword">null</span>) &#123;</span><br><span class="line">        NodeList nodeList = document.getChildNodes();</span><br><span class="line">        System.out.println(nodeList.getLength());</span><br><span class="line"></span><br><span class="line">        Node node = nodeList.item(<span class="number">0</span>);</span><br><span class="line">        System.out.println(node.getNodeName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;cant read&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>也许用try-catch更好一点，但是我Throw了</p>
-<p>NodeList nodeList = document.getChildNodes();</p>
-<p>这个用来获取当前节点的所有子节点</p>
-<p>大概就是以上内容了学的真的有点慢，两个小时的时间除了看网课花了将近半个小时，写Blog花了半个小时，真正写代码的时间整整1H就写了这么点QAQ还都是自己打的时候什么都会，打一点看一下源代码。</p>
-<h3 id="下次努力"><a href="#下次努力" class="headerlink" title="下次努力"></a>下次努力</h3>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>XML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JAVA GSON文件读写</title>
     <url>/2021/03/22/JAVA%20JSON%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</url>
     <content><![CDATA[<p>趁着断电之前赶出来了QAQ<br>是的文件读写和多线程要放放了</p>
@@ -199,6 +142,117 @@
       </tags>
   </entry>
   <entry>
+    <title>JAVA XML文件读写（1）</title>
+    <url>/2021/03/16/JAVA%20XML%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>昨天晚上浪费时间搞了一晚上的安卓开发环境<br>本来下个加速器就能完事的我TM东搞西搞搞了将近3个小时<br>安卓等学到JAVA WEB的时候一起看好了，现在先把进阶学完<br>明天尽可能学到多线程QAQ，<br>书我是一点都看不进去了中文翻译的太离谱了</p>
+<span id="more"></span>
+<h1 id="JAVA-XML文件读写（1）"><a href="#JAVA-XML文件读写（1）" class="headerlink" title="JAVA XML文件读写（1）"></a>JAVA XML文件读写（1）</h1><p>XML文件样式</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">document</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">element</span> <span class="attr">type</span>=<span class="string">&quot;paragraph&quot;</span>&gt;</span></span><br><span class="line">        try1</span><br><span class="line">        <span class="tag">&lt;<span class="name">object</span> <span class="attr">maybeType</span>=<span class="string">&quot;objectType&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span>&gt;</span>textNode1<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">element</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">document</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><del>(用自己写的XML程序写的)</del></p>
+<p>XML文件用3种读写方法：</p>
+<h4 id="DOM方法"><a href="#DOM方法" class="headerlink" title="DOM方法"></a>DOM方法</h4><p>适合读也适合写（也许是，懒得回去看视频了）</p>
+<h4 id="SAX-amp-Stax方法"><a href="#SAX-amp-Stax方法" class="headerlink" title="SAX&amp;Stax方法"></a>SAX&amp;Stax方法</h4><p>用流方法适合读占内存大的XML文件（没学呢没学呢效率过于低下了</p>
+<p>今天就实践了一种DOM方法写文件：主要；</p>
+<p>首先要写XML就得用Java带的Document创建一个XML文件的根</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//文件创建的初始化</span></span><br><span class="line">DocumentBuilder documentBuilder =DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.newDocument();<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
+
+<p>意思就是用工厂方法调用一连串的函数创造一个document这个根</p>
+<p>然后就是创建XML文件的主要框架了</p>
+<p>框架里由一个个元素Element构成，首先就是创建元素，不过在这之前要检查一下这个document有没有创建成功</p>
+<p>（不知道为什么要检查，感觉这种包内部出错的就应该把写这些的拖出去祭天）（每准几年后我会改变这种想法）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创造XML中的标签</span></span><br><span class="line">Element docx = document.createElement(<span class="string">&quot;document&quot;</span>);</span><br><span class="line">Element element = document.createElement(<span class="string">&quot;element&quot;</span>);</span><br><span class="line">Element obj = document.createElement(<span class="string">&quot;object&quot;</span>);</span><br><span class="line">Element text = document.createElement(<span class="string">&quot;text&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这些创建的也就是&lt;&gt;里面的东西了，也就是表明后面text属性的（网课里这么说的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对每个标签附加属性名和属性</span></span><br><span class="line">element.setAttribute(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;paragraph&quot;</span>);</span><br><span class="line">obj.setAttribute(<span class="string">&quot;maybeType&quot;</span>, <span class="string">&quot;objectType&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这个让标签附加上属性名和属性，属性用“”控制赋给属性</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对某一个标签添加text内容</span></span><br><span class="line">text.appendChild(document.createTextNode(<span class="string">&quot;textNode1&quot;</span>));</span><br><span class="line">element.appendChild(document.createTextNode(<span class="string">&quot;try1&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>这个可以给某个标签下添加<del>文件说明</del></p>
+<p><del>某个类似text说明的我不清楚是什么可能网课放的时候开小差了我</del></p>
+<p>真的不知道是什么具体可以看看上面最终成果</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//确定树形结构</span></span><br><span class="line">obj.appendChild(text);</span><br><span class="line">element.appendChild(obj);</span><br><span class="line">docx.appendChild(element);</span><br><span class="line">document.appendChild(docx);</span><br></pre></td></tr></table></figure>
+
+<p>这个就是很简单的树状结构确定了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//也许是XML转换器；</span></span><br><span class="line">Transformer transformer = TransformerFactory.newInstance().newTransformer();</span><br><span class="line"><span class="comment">//将文件根放入</span></span><br><span class="line">DOMSource source = <span class="keyword">new</span> DOMSource(document);</span><br><span class="line">File file = <span class="keyword">new</span> File(<span class="string">&quot;XML_result.xml&quot;</span>);</span><br><span class="line">StreamResult result = <span class="keyword">new</span> StreamResult(file);</span><br><span class="line">transformer.transform(source, result);</span><br></pre></td></tr></table></figure>
+
+<p>这个就是把确定好的树状结构的根放给DOM源，然后这个源用transform输出给文件</p>
+<p>以上就是写XML了</p>
+<p>下面是读</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span><br><span class="line">Document document = documentBuilder.parse(<span class="string">&quot;XML_result.xml&quot;</span>);<span class="comment">//文件的根</span></span><br></pre></td></tr></table></figure>
+
+<p>这个就是读取文件了，可以这之后检查一下有没有读到文件。</p>
+<p>（我因为打印结果的函数调用错了没有输出我想要的内容所以一直输出NULL 我还以为文件读取失败了（虽然由Throw））</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">if</span>(document!=<span class="keyword">null</span>) &#123;</span><br><span class="line">        NodeList nodeList = document.getChildNodes();</span><br><span class="line">        System.out.println(nodeList.getLength());</span><br><span class="line"></span><br><span class="line">        Node node = nodeList.item(<span class="number">0</span>);</span><br><span class="line">        System.out.println(node.getNodeName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;cant read&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也许用try-catch更好一点，但是我Throw了</p>
+<p>NodeList nodeList = document.getChildNodes();</p>
+<p>这个用来获取当前节点的所有子节点</p>
+<p>大概就是以上内容了学的真的有点慢，两个小时的时间除了看网课花了将近半个小时，写Blog花了半个小时，真正写代码的时间整整1H就写了这么点QAQ还都是自己打的时候什么都会，打一点看一下源代码。</p>
+<h3 id="下次努力"><a href="#下次努力" class="headerlink" title="下次努力"></a>下次努力</h3>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>XML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JAVA 并发（1）</title>
+    <url>/2021/03/12/JAVA%20%E5%B9%B6%E5%8F%91%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>3/12/2021 8:36:21 PM<br>3天解决并发入门，DAY1；<br>Android的书快到了，要加快学习进度了;<br>JAVA网课争取在第五周开始前完成并且实践了;</p>
+<span id="more"></span>
+
+<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程也就是任务，就是在一个程序中可以同时跑的多个任务，每个任务就是一个线程。一个线程从开始到结束一共有六种状态：<strong>New,Runnable,Blocked,Waiting,Timed Waiting,Terminated</strong></p>
+<h4 id="New"><a href="#New" class="headerlink" title="New:"></a>New:</h4><p>也就是新创建的线程，该线程还没有开始他的任务</p>
+<h4 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable:"></a>Runnable:</h4><p>在线程调用<code>start（）</code>后这个线程就是可运行状态了，这个状态的线程既可以是运行中的也可以是不运行中的。</p>
+<h4 id="Blocked-amp-Waiting"><a href="#Blocked-amp-Waiting" class="headerlink" title="Blocked&amp;Waiting:"></a>Blocked&amp;Waiting:</h4><p>这两个状态的线程都是活跃度极低的，消耗资源很少的线程。<strong>当某一个线程索取一个被其它线程所拥有的对象锁</strong>就会进入**<u>Blocked状态</u>**，该状态会一直持续到索取的锁被释放同时调度器允许该线程获得这个锁未知。</p>
+<p>而<strong>当线程在等待另一个线程向调度器通知条件时</strong>，会进入**<u>Waiting状态</u>**。这一状态会一直持续到超时期满或者接收到适当通知。</p>
+<h4 id="Terminated"><a href="#Terminated" class="headerlink" title="Terminated:"></a>Terminated:</h4><p>这种状态的线程出现在<strong>线程正常运行完</strong>或者因为一个<strong>没有捕获的异常而退出</strong>。</p>
+<p><del>在很久以前有一个<code>stop()</code>方法可以由一个线程调用去杀死另一个线程</del></p>
+<h3 id="普通单任务程序和利用了线程的程序的区别："><a href="#普通单任务程序和利用了线程的程序的区别：" class="headerlink" title="普通单任务程序和利用了线程的程序的区别："></a>普通单任务程序和利用了线程的程序的区别：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Ball ball = <span class="keyword">new</span> Ball();</span><br><span class="line">    comp.add(ball);</span><br><span class="line">    Runnable r = ()-&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; STEPS; i++) &#123;</span><br><span class="line">                ball.move(comp.getBounds());</span><br><span class="line">                comp.paint(comp.getGraphics());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(DELAY);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    Thread t = <span class="keyword">new</span> Thread(r);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个是利用了线程的程序，当主程序调用时创建的框架会初始化两个按钮</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BounceFrame</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    comp = <span class="keyword">new</span> BallComponent();</span><br><span class="line">    setTitle(<span class="string">&quot;bounceTest&quot;</span>);</span><br><span class="line">    add(comp, BorderLayout.CENTER);</span><br><span class="line"></span><br><span class="line">    JPanel buttonPanel = <span class="keyword">new</span> JPanel();</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;start&quot;</span>, e -&gt; addBall());</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;close&quot;</span>, e -&gt; System.exit(<span class="number">0</span>));</span><br><span class="line">    add(buttonPanel, BorderLayout.SOUTH);</span><br><span class="line"></span><br><span class="line">    pack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>start按钮触发后，会添加一个球绘进框架，而这个球会持续移动直到次数大于STEPS，当次数超过后线程便结束了，每次点击一次start就run一个线程。而单任务则是直接循环绘画这个球弹跳，没跳完也不会停止</p>
+<h3 id="关于线程终止："><a href="#关于线程终止：" class="headerlink" title="关于线程终止："></a>关于线程终止：</h3><p>当对一个线程调用<code>inerrupt()</code>时，这个线程就会进入中断状态。每个线程都有关于中断状态的标志，<strong>每个线程都应该时不时检查这个标志</strong>。要想判断一个线程是否进入中断状态可以通过</p>
+<p><code>Tread.currentTread().isInterrupted()</code>的方法来进行检查。</p>
+<p>但是如果线程被阻塞了再检查中断状态就会产生InterruptedException异常。当在一个sleep的线程上调用<code>interrupt（）</code>的方法，就会被这个异常中断。在处理这个异常的时候有两种方法</p>
+<p>一：</p>
+<p>可以在catch内<code>Tread.currentTread().interrupt()</code>终止线程</p>
+<p>二：</p>
+<p>在方法名上面进行throw InterruptedException让方法调用者捕获这个异常</p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/03/11/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>JAVA 网络编程</title>
     <url>/2021/03/22/JAVA%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<p>再不写Blog我就都快忘记我学什么了。<br>安卓还没开始学QAQ<br>我明天白天要把多线程的书看完。<br>晚上继续学网课，在周末之前学完网课<br>体育要拍视频作业QAQAQAQAQAQAQAQAQAQAQ<br>网络编程写玩了是不是可以用SWING写个聊天软件？</p>
@@ -249,40 +303,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JAVA 并发（1）</title>
-    <url>/2021/03/12/JAVA%20%E5%B9%B6%E5%8F%91%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>3/12/2021 8:36:21 PM<br>3天解决并发入门，DAY1；<br>Android的书快到了，要加快学习进度了;<br>JAVA网课争取在第五周开始前完成并且实践了;</p>
-<span id="more"></span>
-
-<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程也就是任务，就是在一个程序中可以同时跑的多个任务，每个任务就是一个线程。一个线程从开始到结束一共有六种状态：<strong>New,Runnable,Blocked,Waiting,Timed Waiting,Terminated</strong></p>
-<h4 id="New"><a href="#New" class="headerlink" title="New:"></a>New:</h4><p>也就是新创建的线程，该线程还没有开始他的任务</p>
-<h4 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable:"></a>Runnable:</h4><p>在线程调用<code>start（）</code>后这个线程就是可运行状态了，这个状态的线程既可以是运行中的也可以是不运行中的。</p>
-<h4 id="Blocked-amp-Waiting"><a href="#Blocked-amp-Waiting" class="headerlink" title="Blocked&amp;Waiting:"></a>Blocked&amp;Waiting:</h4><p>这两个状态的线程都是活跃度极低的，消耗资源很少的线程。<strong>当某一个线程索取一个被其它线程所拥有的对象锁</strong>就会进入**<u>Blocked状态</u>**，该状态会一直持续到索取的锁被释放同时调度器允许该线程获得这个锁未知。</p>
-<p>而<strong>当线程在等待另一个线程向调度器通知条件时</strong>，会进入**<u>Waiting状态</u>**。这一状态会一直持续到超时期满或者接收到适当通知。</p>
-<h4 id="Terminated"><a href="#Terminated" class="headerlink" title="Terminated:"></a>Terminated:</h4><p>这种状态的线程出现在<strong>线程正常运行完</strong>或者因为一个<strong>没有捕获的异常而退出</strong>。</p>
-<p><del>在很久以前有一个<code>stop()</code>方法可以由一个线程调用去杀死另一个线程</del></p>
-<h3 id="普通单任务程序和利用了线程的程序的区别："><a href="#普通单任务程序和利用了线程的程序的区别：" class="headerlink" title="普通单任务程序和利用了线程的程序的区别："></a>普通单任务程序和利用了线程的程序的区别：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Ball ball = <span class="keyword">new</span> Ball();</span><br><span class="line">    comp.add(ball);</span><br><span class="line">    Runnable r = ()-&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; STEPS; i++) &#123;</span><br><span class="line">                ball.move(comp.getBounds());</span><br><span class="line">                comp.paint(comp.getGraphics());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(DELAY);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    Thread t = <span class="keyword">new</span> Thread(r);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个是利用了线程的程序，当主程序调用时创建的框架会初始化两个按钮</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BounceFrame</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    comp = <span class="keyword">new</span> BallComponent();</span><br><span class="line">    setTitle(<span class="string">&quot;bounceTest&quot;</span>);</span><br><span class="line">    add(comp, BorderLayout.CENTER);</span><br><span class="line"></span><br><span class="line">    JPanel buttonPanel = <span class="keyword">new</span> JPanel();</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;start&quot;</span>, e -&gt; addBall());</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;close&quot;</span>, e -&gt; System.exit(<span class="number">0</span>));</span><br><span class="line">    add(buttonPanel, BorderLayout.SOUTH);</span><br><span class="line"></span><br><span class="line">    pack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>start按钮触发后，会添加一个球绘进框架，而这个球会持续移动直到次数大于STEPS，当次数超过后线程便结束了，每次点击一次start就run一个线程。而单任务则是直接循环绘画这个球弹跳，没跳完也不会停止</p>
-<h3 id="关于线程终止："><a href="#关于线程终止：" class="headerlink" title="关于线程终止："></a>关于线程终止：</h3><p>当对一个线程调用<code>inerrupt()</code>时，这个线程就会进入中断状态。每个线程都有关于中断状态的标志，<strong>每个线程都应该时不时检查这个标志</strong>。要想判断一个线程是否进入中断状态可以通过</p>
-<p><code>Tread.currentTread().isInterrupted()</code>的方法来进行检查。</p>
-<p>但是如果线程被阻塞了再检查中断状态就会产生InterruptedException异常。当在一个sleep的线程上调用<code>interrupt（）</code>的方法，就会被这个异常中断。在处理这个异常的时候有两种方法</p>
-<p>一：</p>
-<p>可以在catch内<code>Tread.currentTread().interrupt()</code>终止线程</p>
-<p>二：</p>
-<p>在方法名上面进行throw InterruptedException让方法调用者捕获这个异常</p>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>welcome to markdownpad</title>
     <url>/2021/03/12/welcome-to-markdownpad/</url>
     <content><![CDATA[<h2 id="Welcome-to-MarkdownPad-2"><a href="#Welcome-to-MarkdownPad-2" class="headerlink" title="Welcome to MarkdownPad 2"></a>Welcome to MarkdownPad 2</h2><p><strong>MarkdownPad</strong> is a full-featured Markdown editor for Windows.</p>
@@ -308,25 +328,5 @@
       <tags>
         <tag>firts</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/03/11/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
 </search>
