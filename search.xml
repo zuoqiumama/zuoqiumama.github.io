@@ -1,71 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Android基础</title>
-    <url>/2021/04/06/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>终于开始安卓学习了<br>接受了一晚上地焦虑信息输入，下次Kotlin和Flutter要一起加油了<br>做了很多工具式的事情，弄了些插件学了些使用方法现在感觉敲代码更加快乐了<br>想要快点开发一个自己的APP嘻嘻虽然不知道要搞什么<br>JAVA也要准备学习WEB内容了<br>不过这之前先在这个周末把数据库编程学了<br>可恶中午午觉起来去图书馆自习突然发现图书馆不能刷手机进去了要一卡通<br>还走了好多路呢</p>
-<span id="more"></span>
-<h1 id="Android开发学习"><a href="#Android开发学习" class="headerlink" title="Android开发学习"></a>Android开发学习</h1><h2 id="Kotlin基础"><a href="#Kotlin基础" class="headerlink" title="Kotlin基础"></a>Kotlin基础</h2><p>确实确实</p>
-<p>终于开始学习安卓开发了，先学习的Kotlin基础知识</p>
-<p>变量初始化还蛮奇怪的</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> Student1 = Student(<span class="number">99</span>,<span class="number">1910301008</span>,<span class="string">&quot;zuoqiumama&quot;</span>,<span class="number">20</span>)</span><br><span class="line"><span class="keyword">val</span> Teacher1 = Teacher(<span class="string">&quot;math&quot;</span>,<span class="number">10110</span>,<span class="string">&quot;qiuqiuma&quot;</span>,<span class="number">24</span>)</span><br></pre></td></tr></table></figure>
-
-<p>val表示不可变，而var代表可变，在变量名后面加个冒号加个变量类型再加个等号＝啥啥的差不多就是变量初始化了，Kotlin有非常强大的类型推导，所以不太需要表明类型。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">move</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">eat</span><span class="params">(obj: <span class="type">String</span>)</span></span>&#123;</span><br><span class="line">        println(<span class="keyword">this</span>.toString()+<span class="string">&quot;is eating <span class="variable">$obj</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="keyword">this</span>.toString()+<span class="string">&quot;is running&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个是接口说明，在Kotlin中的接口可以有默认实现，有了默认实现的函数不需要在继承该接口的类中进行重载</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">People</span></span>(<span class="keyword">var</span> name:String,age:<span class="built_in">Int</span> ):move</span><br></pre></td></tr></table></figure>
-
-<p>在Kotlin中类不加修饰的都是不可被继承的，控制类能不能继承是个好习惯。</p>
-<p>在JAVA中，不可继承的类最好加入final修饰</p>
-<p>open代表类可以被继承</p>
-<p>data数据类，自动给你hashcode，toString,eaquels函数配置好，</p>
-<p>object表示单例类，就是只有一个实例的类</p>
-<p>另外Kotlin的构造函数可以直接在类名后面加括号，类的内容也可以在括号里面添加</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> grade:<span class="built_in">Int</span>, <span class="keyword">private</span> <span class="keyword">val</span> id:<span class="built_in">Int</span>, name:String, age : <span class="built_in">Int</span>):People(name, age) &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">showGrade</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="string">&quot;this student<span class="variable">$id</span> grade is<span class="variable">$grade</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// override  fun toString():String = &quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>看这个就知道构造函数把类要的都包含了，后面两个参数不加val或者var就是区别是不是这个类的参数</p>
-<p>Kotlin还有个次构造函数，但这个构造函数一定要调用主构造函数，其实这个初始化方式可以用给主构造函数默认值解决</p>
-<p>从这个代码块里面看，还有个字符串嵌入这一个语法糖，美元符号后面就是变量值输出</p>
-<h2 id="Android基础"><a href="#Android基础" class="headerlink" title="Android基础"></a>Android基础</h2><p>开始安卓基础学了真的真的真的</p>
-<p>先接触的就是Activity这个东西，mainActivity就是APP点开调用的东西</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//setContentView(R.layout.firstlayout)</span></span><br><span class="line">    <span class="comment">//viewBinding绑定视图</span></span><br><span class="line">    <span class="keyword">val</span> binding = FirstlayoutBinding.inflate(layoutInflater)</span><br><span class="line">    setContentView(binding.root)</span><br><span class="line">    <span class="comment">//直接用binding调用组件设置相关内容</span></span><br><span class="line">    binding.button1.setOnClickListener &#123;</span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>,<span class="string">&quot;Binding Test Click&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    //获取按钮</span></span><br><span class="line"><span class="comment">    val button1:Button = findViewById(R.id.start_button)</span></span><br><span class="line"><span class="comment">    //监听按钮</span></span><br><span class="line"><span class="comment">    button1.setOnClickListener&#123;</span></span><br><span class="line"><span class="comment">        //按钮点击的事件</span></span><br><span class="line"><span class="comment">        Toast.makeText(this,&quot;click button once&quot;,Toast.LENGTH_SHORT).show()</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里就不得不吐槽下Google技术更新换代的快了QAQ</p>
-<p>本来原来方法是用findViewById这个方法找到布局里的元素比如按钮等</p>
-<p>最新版的书还写着用一个插件直接根据元素的id调用布局文件里面的元素，结果官方取消了这个默认方法，</p>
-<p>改成了用ViewBinding的方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">    android:id&#x3D;&quot;@+id&#x2F;button1&quot;</span><br><span class="line">    android:layout_width&#x3D;&quot;match_parent&quot;</span><br><span class="line">    android:layout_height&#x3D;&quot;wrap_content&quot;</span><br><span class="line">    android:text&#x3D;&quot;START&quot;</span><br><span class="line">    &#x2F;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>比如说这个是layout的按钮信息</p>
-<p>在App文件里面的build.gradle里加入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">buildFeatures &#123;</span><br><span class="line">    viewBinding true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就可以让元素像上面</p>
-<p>binding.button1.setOnClickListener {<br>        Toast.makeText(this,”Binding Test Click”, Toast.LENGTH_SHORT).show()<br>    }</p>
-<p>一样调用设置监听</p>
-<p>然后还设置了菜单</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;item android:id&#x3D;&quot;@+id&#x2F;add_item&quot;</span><br><span class="line">    android:title&#x3D;&quot;@string&#x2F;add&quot;&#x2F;&gt;</span><br><span class="line">&lt;item android:id&#x3D;&quot;@+id&#x2F;remove_item&quot;</span><br><span class="line">    android:title&#x3D;&quot;@string&#x2F;remove&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateOptionsMenu</span><span class="params">(menu: <span class="type">Menu</span>?)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    menuInflater.inflate(R.menu.main,menu)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onOptionsItemSelected</span><span class="params">(item: <span class="type">MenuItem</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对when的复习吧</span></span><br><span class="line"><span class="comment">     * 控制菜单的点击事件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">when</span>(item.itemId)&#123;</span><br><span class="line">        R.id.add_item-&gt;Toast.makeText(<span class="keyword">this</span>,<span class="string">&quot;click add &quot;</span>,Toast.LENGTH_SHORT).show()</span><br><span class="line">        R.id.remove_item-&gt;Toast.makeText(<span class="keyword">this</span>,<span class="string">&quot;click remove&quot;</span>,Toast.LENGTH_SHORT).show()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个就是创建一个菜单，然后监听这个菜单事件</p>
-<p>这些都是很简单易懂的很难扩展说明</p>
-<p>学到后面我都不知道inflate是什么意思、、</p>
-<p>感觉翻译软件不太好用</p>
-<p>说到翻译软件就不得不夸夸插件</p>
-<p>IDEA的插件（彩虹括号，主题，彩虹小马）和Edge插件（VPN，油猴脚本—直接免费看VIP）都太好用了</p>
-<p>还有2021、4、6我把IDEA的完整版给破解了嘻嘻嘻，现在昂贵的IDEA可以用到2099年</p>
-<p>一会再把IDEA的插件搞下我就可以心满意足地去睡觉了</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>-Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JAVA GSON文件读写</title>
     <url>/2021/03/22/JAVA%20JSON%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</url>
     <content><![CDATA[<p>趁着断电之前赶出来了QAQ<br>是的文件读写和多线程要放放了</p>
@@ -142,6 +77,71 @@
       </tags>
   </entry>
   <entry>
+    <title>Android基础</title>
+    <url>/2021/04/06/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>终于开始安卓学习了<br>接受了一晚上地焦虑信息输入，下次Kotlin和Flutter要一起加油了<br>做了很多工具式的事情，弄了些插件学了些使用方法现在感觉敲代码更加快乐了<br>想要快点开发一个自己的APP嘻嘻虽然不知道要搞什么<br>JAVA也要准备学习WEB内容了<br>不过这之前先在这个周末把数据库编程学了<br>可恶中午午觉起来去图书馆自习突然发现图书馆不能刷手机进去了要一卡通<br>还走了好多路呢</p>
+<span id="more"></span>
+<h1 id="Android开发学习"><a href="#Android开发学习" class="headerlink" title="Android开发学习"></a>Android开发学习</h1><h2 id="Kotlin基础"><a href="#Kotlin基础" class="headerlink" title="Kotlin基础"></a>Kotlin基础</h2><p>确实确实</p>
+<p>终于开始学习安卓开发了，先学习的Kotlin基础知识</p>
+<p>变量初始化还蛮奇怪的</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> Student1 = Student(<span class="number">99</span>,<span class="number">1910301008</span>,<span class="string">&quot;zuoqiumama&quot;</span>,<span class="number">20</span>)</span><br><span class="line"><span class="keyword">val</span> Teacher1 = Teacher(<span class="string">&quot;math&quot;</span>,<span class="number">10110</span>,<span class="string">&quot;qiuqiuma&quot;</span>,<span class="number">24</span>)</span><br></pre></td></tr></table></figure>
+
+<p>val表示不可变，而var代表可变，在变量名后面加个冒号加个变量类型再加个等号＝啥啥的差不多就是变量初始化了，Kotlin有非常强大的类型推导，所以不太需要表明类型。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">move</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">eat</span><span class="params">(obj: <span class="type">String</span>)</span></span>&#123;</span><br><span class="line">        println(<span class="keyword">this</span>.toString()+<span class="string">&quot;is eating <span class="variable">$obj</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="keyword">this</span>.toString()+<span class="string">&quot;is running&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个是接口说明，在Kotlin中的接口可以有默认实现，有了默认实现的函数不需要在继承该接口的类中进行重载</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">People</span></span>(<span class="keyword">var</span> name:String,age:<span class="built_in">Int</span> ):move</span><br></pre></td></tr></table></figure>
+
+<p>在Kotlin中类不加修饰的都是不可被继承的，控制类能不能继承是个好习惯。</p>
+<p>在JAVA中，不可继承的类最好加入final修饰</p>
+<p>open代表类可以被继承</p>
+<p>data数据类，自动给你hashcode，toString,eaquels函数配置好，</p>
+<p>object表示单例类，就是只有一个实例的类</p>
+<p>另外Kotlin的构造函数可以直接在类名后面加括号，类的内容也可以在括号里面添加</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> grade:<span class="built_in">Int</span>, <span class="keyword">private</span> <span class="keyword">val</span> id:<span class="built_in">Int</span>, name:String, age : <span class="built_in">Int</span>):People(name, age) &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">showGrade</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="string">&quot;this student<span class="variable">$id</span> grade is<span class="variable">$grade</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// override  fun toString():String = &quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看这个就知道构造函数把类要的都包含了，后面两个参数不加val或者var就是区别是不是这个类的参数</p>
+<p>Kotlin还有个次构造函数，但这个构造函数一定要调用主构造函数，其实这个初始化方式可以用给主构造函数默认值解决</p>
+<p>从这个代码块里面看，还有个字符串嵌入这一个语法糖，美元符号后面就是变量值输出</p>
+<h2 id="Android基础"><a href="#Android基础" class="headerlink" title="Android基础"></a>Android基础</h2><p>开始安卓基础学了真的真的真的</p>
+<p>先接触的就是Activity这个东西，mainActivity就是APP点开调用的东西</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//setContentView(R.layout.firstlayout)</span></span><br><span class="line">    <span class="comment">//viewBinding绑定视图</span></span><br><span class="line">    <span class="keyword">val</span> binding = FirstlayoutBinding.inflate(layoutInflater)</span><br><span class="line">    setContentView(binding.root)</span><br><span class="line">    <span class="comment">//直接用binding调用组件设置相关内容</span></span><br><span class="line">    binding.button1.setOnClickListener &#123;</span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>,<span class="string">&quot;Binding Test Click&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    //获取按钮</span></span><br><span class="line"><span class="comment">    val button1:Button = findViewById(R.id.start_button)</span></span><br><span class="line"><span class="comment">    //监听按钮</span></span><br><span class="line"><span class="comment">    button1.setOnClickListener&#123;</span></span><br><span class="line"><span class="comment">        //按钮点击的事件</span></span><br><span class="line"><span class="comment">        Toast.makeText(this,&quot;click button once&quot;,Toast.LENGTH_SHORT).show()</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里就不得不吐槽下Google技术更新换代的快了QAQ</p>
+<p>本来原来方法是用findViewById这个方法找到布局里的元素比如按钮等</p>
+<p>最新版的书还写着用一个插件直接根据元素的id调用布局文件里面的元素，结果官方取消了这个默认方法，</p>
+<p>改成了用ViewBinding的方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">    android:id&#x3D;&quot;@+id&#x2F;button1&quot;</span><br><span class="line">    android:layout_width&#x3D;&quot;match_parent&quot;</span><br><span class="line">    android:layout_height&#x3D;&quot;wrap_content&quot;</span><br><span class="line">    android:text&#x3D;&quot;START&quot;</span><br><span class="line">    &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>比如说这个是layout的按钮信息</p>
+<p>在App文件里面的build.gradle里加入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">buildFeatures &#123;</span><br><span class="line">    viewBinding true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就可以让元素像上面</p>
+<p>binding.button1.setOnClickListener {<br>        Toast.makeText(this,”Binding Test Click”, Toast.LENGTH_SHORT).show()<br>    }</p>
+<p>一样调用设置监听</p>
+<p>然后还设置了菜单</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;item android:id&#x3D;&quot;@+id&#x2F;add_item&quot;</span><br><span class="line">    android:title&#x3D;&quot;@string&#x2F;add&quot;&#x2F;&gt;</span><br><span class="line">&lt;item android:id&#x3D;&quot;@+id&#x2F;remove_item&quot;</span><br><span class="line">    android:title&#x3D;&quot;@string&#x2F;remove&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateOptionsMenu</span><span class="params">(menu: <span class="type">Menu</span>?)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    menuInflater.inflate(R.menu.main,menu)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onOptionsItemSelected</span><span class="params">(item: <span class="type">MenuItem</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对when的复习吧</span></span><br><span class="line"><span class="comment">     * 控制菜单的点击事件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">when</span>(item.itemId)&#123;</span><br><span class="line">        R.id.add_item-&gt;Toast.makeText(<span class="keyword">this</span>,<span class="string">&quot;click add &quot;</span>,Toast.LENGTH_SHORT).show()</span><br><span class="line">        R.id.remove_item-&gt;Toast.makeText(<span class="keyword">this</span>,<span class="string">&quot;click remove&quot;</span>,Toast.LENGTH_SHORT).show()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个就是创建一个菜单，然后监听这个菜单事件</p>
+<p>这些都是很简单易懂的很难扩展说明</p>
+<p>学到后面我都不知道inflate是什么意思、、</p>
+<p>感觉翻译软件不太好用</p>
+<p>说到翻译软件就不得不夸夸插件</p>
+<p>IDEA的插件（彩虹括号，主题，彩虹小马）和Edge插件（VPN，油猴脚本—直接免费看VIP）都太好用了</p>
+<p>还有2021、4、6我把IDEA的完整版给破解了嘻嘻嘻，现在昂贵的IDEA可以用到2099年</p>
+<p>一会再把IDEA的插件搞下我就可以心满意足地去睡觉了</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>-Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JAVA XML文件读写（1）</title>
     <url>/2021/03/16/JAVA%20XML%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%EF%BC%881%EF%BC%89/</url>
     <content><![CDATA[<p>昨天晚上浪费时间搞了一晚上的安卓开发环境<br>本来下个加速器就能完事的我TM东搞西搞搞了将近3个小时<br>安卓等学到JAVA WEB的时候一起看好了，现在先把进阶学完<br>明天尽可能学到多线程QAQ，<br>书我是一点都看不进去了中文翻译的太离谱了</p>
@@ -199,60 +199,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JAVA 并发（1）</title>
-    <url>/2021/03/12/JAVA%20%E5%B9%B6%E5%8F%91%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>3/12/2021 8:36:21 PM<br>3天解决并发入门，DAY1；<br>Android的书快到了，要加快学习进度了;<br>JAVA网课争取在第五周开始前完成并且实践了;</p>
-<span id="more"></span>
-
-<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程也就是任务，就是在一个程序中可以同时跑的多个任务，每个任务就是一个线程。一个线程从开始到结束一共有六种状态：<strong>New,Runnable,Blocked,Waiting,Timed Waiting,Terminated</strong></p>
-<h4 id="New"><a href="#New" class="headerlink" title="New:"></a>New:</h4><p>也就是新创建的线程，该线程还没有开始他的任务</p>
-<h4 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable:"></a>Runnable:</h4><p>在线程调用<code>start（）</code>后这个线程就是可运行状态了，这个状态的线程既可以是运行中的也可以是不运行中的。</p>
-<h4 id="Blocked-amp-Waiting"><a href="#Blocked-amp-Waiting" class="headerlink" title="Blocked&amp;Waiting:"></a>Blocked&amp;Waiting:</h4><p>这两个状态的线程都是活跃度极低的，消耗资源很少的线程。<strong>当某一个线程索取一个被其它线程所拥有的对象锁</strong>就会进入**<u>Blocked状态</u>**，该状态会一直持续到索取的锁被释放同时调度器允许该线程获得这个锁未知。</p>
-<p>而<strong>当线程在等待另一个线程向调度器通知条件时</strong>，会进入**<u>Waiting状态</u>**。这一状态会一直持续到超时期满或者接收到适当通知。</p>
-<h4 id="Terminated"><a href="#Terminated" class="headerlink" title="Terminated:"></a>Terminated:</h4><p>这种状态的线程出现在<strong>线程正常运行完</strong>或者因为一个<strong>没有捕获的异常而退出</strong>。</p>
-<p><del>在很久以前有一个<code>stop()</code>方法可以由一个线程调用去杀死另一个线程</del></p>
-<h3 id="普通单任务程序和利用了线程的程序的区别："><a href="#普通单任务程序和利用了线程的程序的区别：" class="headerlink" title="普通单任务程序和利用了线程的程序的区别："></a>普通单任务程序和利用了线程的程序的区别：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Ball ball = <span class="keyword">new</span> Ball();</span><br><span class="line">    comp.add(ball);</span><br><span class="line">    Runnable r = ()-&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; STEPS; i++) &#123;</span><br><span class="line">                ball.move(comp.getBounds());</span><br><span class="line">                comp.paint(comp.getGraphics());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(DELAY);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    Thread t = <span class="keyword">new</span> Thread(r);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个是利用了线程的程序，当主程序调用时创建的框架会初始化两个按钮</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BounceFrame</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    comp = <span class="keyword">new</span> BallComponent();</span><br><span class="line">    setTitle(<span class="string">&quot;bounceTest&quot;</span>);</span><br><span class="line">    add(comp, BorderLayout.CENTER);</span><br><span class="line"></span><br><span class="line">    JPanel buttonPanel = <span class="keyword">new</span> JPanel();</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;start&quot;</span>, e -&gt; addBall());</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;close&quot;</span>, e -&gt; System.exit(<span class="number">0</span>));</span><br><span class="line">    add(buttonPanel, BorderLayout.SOUTH);</span><br><span class="line"></span><br><span class="line">    pack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>start按钮触发后，会添加一个球绘进框架，而这个球会持续移动直到次数大于STEPS，当次数超过后线程便结束了，每次点击一次start就run一个线程。而单任务则是直接循环绘画这个球弹跳，没跳完也不会停止</p>
-<h3 id="关于线程终止："><a href="#关于线程终止：" class="headerlink" title="关于线程终止："></a>关于线程终止：</h3><p>当对一个线程调用<code>inerrupt()</code>时，这个线程就会进入中断状态。每个线程都有关于中断状态的标志，<strong>每个线程都应该时不时检查这个标志</strong>。要想判断一个线程是否进入中断状态可以通过</p>
-<p><code>Tread.currentTread().isInterrupted()</code>的方法来进行检查。</p>
-<p>但是如果线程被阻塞了再检查中断状态就会产生InterruptedException异常。当在一个sleep的线程上调用<code>interrupt（）</code>的方法，就会被这个异常中断。在处理这个异常的时候有两种方法</p>
-<p>一：</p>
-<p>可以在catch内<code>Tread.currentTread().interrupt()</code>终止线程</p>
-<p>二：</p>
-<p>在方法名上面进行throw InterruptedException让方法调用者捕获这个异常</p>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/03/11/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>JAVA 网络编程</title>
     <url>/2021/03/22/JAVA%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<p>再不写Blog我就都快忘记我学什么了。<br>安卓还没开始学QAQ<br>我明天白天要把多线程的书看完。<br>晚上继续学网课，在周末之前学完网课<br>体育要拍视频作业QAQAQAQAQAQAQAQAQAQAQ<br>网络编程写玩了是不是可以用SWING写个聊天软件？</p>
@@ -303,6 +249,40 @@
       </tags>
   </entry>
   <entry>
+    <title>JAVA 并发（1）</title>
+    <url>/2021/03/12/JAVA%20%E5%B9%B6%E5%8F%91%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>3/12/2021 8:36:21 PM<br>3天解决并发入门，DAY1；<br>Android的书快到了，要加快学习进度了;<br>JAVA网课争取在第五周开始前完成并且实践了;</p>
+<span id="more"></span>
+
+<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程也就是任务，就是在一个程序中可以同时跑的多个任务，每个任务就是一个线程。一个线程从开始到结束一共有六种状态：<strong>New,Runnable,Blocked,Waiting,Timed Waiting,Terminated</strong></p>
+<h4 id="New"><a href="#New" class="headerlink" title="New:"></a>New:</h4><p>也就是新创建的线程，该线程还没有开始他的任务</p>
+<h4 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable:"></a>Runnable:</h4><p>在线程调用<code>start（）</code>后这个线程就是可运行状态了，这个状态的线程既可以是运行中的也可以是不运行中的。</p>
+<h4 id="Blocked-amp-Waiting"><a href="#Blocked-amp-Waiting" class="headerlink" title="Blocked&amp;Waiting:"></a>Blocked&amp;Waiting:</h4><p>这两个状态的线程都是活跃度极低的，消耗资源很少的线程。<strong>当某一个线程索取一个被其它线程所拥有的对象锁</strong>就会进入**<u>Blocked状态</u>**，该状态会一直持续到索取的锁被释放同时调度器允许该线程获得这个锁未知。</p>
+<p>而<strong>当线程在等待另一个线程向调度器通知条件时</strong>，会进入**<u>Waiting状态</u>**。这一状态会一直持续到超时期满或者接收到适当通知。</p>
+<h4 id="Terminated"><a href="#Terminated" class="headerlink" title="Terminated:"></a>Terminated:</h4><p>这种状态的线程出现在<strong>线程正常运行完</strong>或者因为一个<strong>没有捕获的异常而退出</strong>。</p>
+<p><del>在很久以前有一个<code>stop()</code>方法可以由一个线程调用去杀死另一个线程</del></p>
+<h3 id="普通单任务程序和利用了线程的程序的区别："><a href="#普通单任务程序和利用了线程的程序的区别：" class="headerlink" title="普通单任务程序和利用了线程的程序的区别："></a>普通单任务程序和利用了线程的程序的区别：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Ball ball = <span class="keyword">new</span> Ball();</span><br><span class="line">    comp.add(ball);</span><br><span class="line">    Runnable r = ()-&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; STEPS; i++) &#123;</span><br><span class="line">                ball.move(comp.getBounds());</span><br><span class="line">                comp.paint(comp.getGraphics());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(DELAY);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    Thread t = <span class="keyword">new</span> Thread(r);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个是利用了线程的程序，当主程序调用时创建的框架会初始化两个按钮</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BounceFrame</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    comp = <span class="keyword">new</span> BallComponent();</span><br><span class="line">    setTitle(<span class="string">&quot;bounceTest&quot;</span>);</span><br><span class="line">    add(comp, BorderLayout.CENTER);</span><br><span class="line"></span><br><span class="line">    JPanel buttonPanel = <span class="keyword">new</span> JPanel();</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;start&quot;</span>, e -&gt; addBall());</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;close&quot;</span>, e -&gt; System.exit(<span class="number">0</span>));</span><br><span class="line">    add(buttonPanel, BorderLayout.SOUTH);</span><br><span class="line"></span><br><span class="line">    pack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>start按钮触发后，会添加一个球绘进框架，而这个球会持续移动直到次数大于STEPS，当次数超过后线程便结束了，每次点击一次start就run一个线程。而单任务则是直接循环绘画这个球弹跳，没跳完也不会停止</p>
+<h3 id="关于线程终止："><a href="#关于线程终止：" class="headerlink" title="关于线程终止："></a>关于线程终止：</h3><p>当对一个线程调用<code>inerrupt()</code>时，这个线程就会进入中断状态。每个线程都有关于中断状态的标志，<strong>每个线程都应该时不时检查这个标志</strong>。要想判断一个线程是否进入中断状态可以通过</p>
+<p><code>Tread.currentTread().isInterrupted()</code>的方法来进行检查。</p>
+<p>但是如果线程被阻塞了再检查中断状态就会产生InterruptedException异常。当在一个sleep的线程上调用<code>interrupt（）</code>的方法，就会被这个异常中断。在处理这个异常的时候有两种方法</p>
+<p>一：</p>
+<p>可以在catch内<code>Tread.currentTread().interrupt()</code>终止线程</p>
+<p>二：</p>
+<p>在方法名上面进行throw InterruptedException让方法调用者捕获这个异常</p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>welcome to markdownpad</title>
     <url>/2021/03/12/welcome-to-markdownpad/</url>
     <content><![CDATA[<h2 id="Welcome-to-MarkdownPad-2"><a href="#Welcome-to-MarkdownPad-2" class="headerlink" title="Welcome to MarkdownPad 2"></a>Welcome to MarkdownPad 2</h2><p><strong>MarkdownPad</strong> is a full-featured Markdown editor for Windows.</p>
@@ -328,5 +308,25 @@
       <tags>
         <tag>firts</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/03/11/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
 </search>
