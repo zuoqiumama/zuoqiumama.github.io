@@ -1,82 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JAVA GSON文件读写</title>
-    <url>/2021/03/22/JAVA%20JSON%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</url>
-    <content><![CDATA[<p>趁着断电之前赶出来了QAQ<br>是的文件读写和多线程要放放了</p>
-<span id="more"></span>
-<h1 id="JAVA-JSON文件读写"><a href="#JAVA-JSON文件读写" class="headerlink" title="JAVA JSON文件读写"></a>JAVA JSON文件读写</h1><p>这个json是几天前学的东西了有点忘了</p>
-<h4 id="JSON的特性"><a href="#JSON的特性" class="headerlink" title="JSON的特性"></a>JSON的特性</h4><p>JSON比XML更加轻便，表示也很方便</p>
-<p>{}是一个对象内容</p>
-<p>【】是数组</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;school name&quot;</span>:<span class="string">&quot;newschool&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;teacher&quot;</span>:<span class="string">&quot;&#123;\&quot;teahcer2\&quot;:\&quot;&#123;\\\&quot;name\\\&quot;:\\\&quot;张老师\\\&quot;,\\\&quot;id\\\&quot;:2&#125;\&quot;,\&quot;student\&quot;:[\&quot;&#123;\\\&quot;name\\\&quot;:\\\&quot;sdfcxd\\\&quot;,\\\&quot;id\\\&quot;:4&#125;,&#123;\\\&quot;name\\\&quot;:\\\&quot;shyhij\\\&quot;,\\\&quot;id\\\&quot;:655&#125;\&quot;]&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个就是我写的JSON的文件。</p>
-<p>很显然有BUG但我决定为了多线程的学习把文件读写推后学了</p>
-<p>处理JSON在JAVA里有GSON 这个包，<del>网课里介绍这个包比较好用所以别的我就没有学嘻嘻</del></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Gson gson &#x3D; new Gson();</span><br></pre></td></tr></table></figure>
-
-<p>这个创建一个gson对象这样可以将一个类的信息和JSON文件信息相互转换（也许是我还没有尝试把一个JSON文件信息转换成类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">JsonObject newSchool = <span class="keyword">new</span> JsonObject();</span><br><span class="line">newSchool.addProperty(<span class="string">&quot;school name&quot;</span>,<span class="string">&quot;newschool&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>实例化一个jsonObject，这样就可在这个对象上创建JSON实例，比如我可以addProperty创建一个school  name信息，并给他赋值。这就很想HashMap键值配对</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">JsonArray stuArr = <span class="keyword">new</span> JsonArray();</span><br><span class="line">JsonArray stuArr2 = <span class="keyword">new</span> JsonArray();</span><br><span class="line">String stu1 = gson.toJson(student1)+<span class="string">&quot;,&quot;</span>+gson.toJson(student2);</span><br><span class="line">String stu2 = gson.toJson(student3)+<span class="string">&quot;,&quot;</span>+gson.toJson(student4);</span><br><span class="line">stuArr.add(stu1);</span><br><span class="line">stuArr2.add(stu2);</span><br></pre></td></tr></table></figure>
-
-<p>我尝试着做两个学生JSON数组，</p>
-<p>很明显是做出来了</p>
-<p>但是效果不是很感觉QAQ</p>
-<p>因为在我尝试把学生数组插入给教师</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">objTeacher1.add(<span class="string">&quot;student&quot;</span>,stuArr);</span><br><span class="line">objTeacher2.add(<span class="string">&quot;student&quot;</span>,stuArr2);</span><br><span class="line">newSchool.addProperty(<span class="string">&quot;teacher&quot;</span>, gson.toJson(objTeacher1));</span><br><span class="line">newSchool.addProperty(<span class="string">&quot;teacher&quot;</span>, gson.toJson(objTeacher2));</span><br></pre></td></tr></table></figure>
-
-<p>失败了，好像是两个学生数组插入到一个老师里面了</p>
-<p>而且整个school里面我创建了2个老师，但是最后输出却只有1个老师</p>
-<p>无所谓了以后再说</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">&quot;GsonTest.json&quot;</span>);</span><br><span class="line">FileWriter writer = <span class="keyword">new</span> FileWriter(file);</span><br><span class="line">writer.append(gson.toJson(newSchool));</span><br><span class="line">writer.close();</span><br></pre></td></tr></table></figure>
-
-<p>笑死，根本不会文件读写</p>
-<h1 id="JAVA-多线程"><a href="#JAVA-多线程" class="headerlink" title="JAVA 多线程"></a>JAVA 多线程</h1><p>然后就是多线程了</p>
-<p>根据网课给的一个生物系统生产者不断生产资源，和捕食者不断在生态系统中掠夺资源，形成一个动态资源。</p>
-<p>我自己写了一个存款人和取款人不断在一个银行里存款取款的方法。</p>
-<p>先是一个银行</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">double</span>[] accounts;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Lock bankLock = <span class="keyword">new</span> ReentrantLock();</span><br></pre></td></tr></table></figure>
-
-<p>accounts模拟一个银行多个账户，存款人和取款人各2个每个都是线程。</p>
-<p>//不是的上面是转账的，搞错了。用了普通的锁，也许在并发1里讲过了。</p>
-<p>下面的才是存款取款人</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> <span class="keyword">int</span> money;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> upperLimit;</span><br></pre></td></tr></table></figure>
-
-<p>volatile表示这个域每次改变 ，获得这个域的线程都能实时地变，不会出错。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">drawMoney</span><span class="params">(<span class="keyword">int</span> theMoney)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>((money - theMoney)&lt; <span class="number">0</span> )&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Money is not enough&quot;</span>);</span><br><span class="line">        wait();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    money -= theMoney;</span><br><span class="line">    System.out.print(Thread.currentThread().getName());</span><br><span class="line">    Bank.totalMoney();</span><br><span class="line">    notifyAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个就是取款人的取款动作，银行提供取钱功能给取款人使用。当钱不够想要取的钱的时候这个事件就会等待满足条件后再进行，wait()就是实现这个功能的。在功能最后，也就是取款完，唤醒其它可能存在的等待线程。例如因为<del>银行钱存满了</del> 而等待的存款人事件。告诉他们事情做完了，让调控器选择合适的线程进行启动。</p>
-<p>存款人和这个行为很像。</p>
-<p>然后在主函数启动4个线程就可以了嘻嘻。</p>
-<h2 id="excutor"><a href="#excutor" class="headerlink" title="excutor"></a>excutor</h2><p>一个设计好的线程池框架</p>
-<p>本来我自己想用普通的Thread的线程，实现6个线程计算10到1000的累加</p>
-<p>然后怎么算都是错的</p>
-<p>我放弃了</p>
-<p>然后看到了excutor框架</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(<span class="number">6</span>);</span><br><span class="line">List&lt;Future&lt;Double&gt;&gt; resultList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>第一个是确定线程池里最多有几个线程</p>
-<p>第二个是存放一个result的数组</p>
-<p>excutor和Runnable的区别就在于excutor需要覆盖的call方法可以有返回值，而run不需要。他们作为方法一个由excutor.submit提交就可以运行线程。而run由线程start开始运行。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">    Sumer sumer = <span class="keyword">new</span> Sumer(<span class="number">10</span>*i+<span class="number">1</span>,(i+<span class="number">1</span>)*<span class="number">10</span>);</span><br><span class="line">    Future&lt;Double&gt; result = executor.submit(sumer);</span><br><span class="line">    resultList.add(result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样就能把结果存进数组里，然后要得到最终结果只需要遍历数组就可以了。</p>
-<h2 id="Fork-join"><a href="#Fork-join" class="headerlink" title="Fork-join"></a>Fork-join</h2><p>也许是这个框架，刚学，不熟，还没实现</p>
-<p>而且后面的多线程课程，我书本里更详细。</p>
-<p>就是条件控制定时和锁。书里先讲了这些。</p>
-<p>以后再说。</p>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>-XML -多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android基础</title>
     <url>/2021/04/06/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<p>终于开始安卓学习了<br>接受了一晚上地焦虑信息输入，下次Kotlin和Flutter要一起加油了<br>做了很多工具式的事情，弄了些插件学了些使用方法现在感觉敲代码更加快乐了<br>想要快点开发一个自己的APP嘻嘻虽然不知道要搞什么<br>JAVA也要准备学习WEB内容了<br>不过这之前先在这个周末把数据库编程学了<br>可恶中午午觉起来去图书馆自习突然发现图书馆不能刷手机进去了要一卡通<br>还走了好多路呢</p>
@@ -199,6 +123,82 @@
       </tags>
   </entry>
   <entry>
+    <title>JAVA GSON文件读写</title>
+    <url>/2021/03/22/JAVA%20JSON%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</url>
+    <content><![CDATA[<p>趁着断电之前赶出来了QAQ<br>是的文件读写和多线程要放放了</p>
+<span id="more"></span>
+<h1 id="JAVA-JSON文件读写"><a href="#JAVA-JSON文件读写" class="headerlink" title="JAVA JSON文件读写"></a>JAVA JSON文件读写</h1><p>这个json是几天前学的东西了有点忘了</p>
+<h4 id="JSON的特性"><a href="#JSON的特性" class="headerlink" title="JSON的特性"></a>JSON的特性</h4><p>JSON比XML更加轻便，表示也很方便</p>
+<p>{}是一个对象内容</p>
+<p>【】是数组</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;school name&quot;</span>:<span class="string">&quot;newschool&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;teacher&quot;</span>:<span class="string">&quot;&#123;\&quot;teahcer2\&quot;:\&quot;&#123;\\\&quot;name\\\&quot;:\\\&quot;张老师\\\&quot;,\\\&quot;id\\\&quot;:2&#125;\&quot;,\&quot;student\&quot;:[\&quot;&#123;\\\&quot;name\\\&quot;:\\\&quot;sdfcxd\\\&quot;,\\\&quot;id\\\&quot;:4&#125;,&#123;\\\&quot;name\\\&quot;:\\\&quot;shyhij\\\&quot;,\\\&quot;id\\\&quot;:655&#125;\&quot;]&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个就是我写的JSON的文件。</p>
+<p>很显然有BUG但我决定为了多线程的学习把文件读写推后学了</p>
+<p>处理JSON在JAVA里有GSON 这个包，<del>网课里介绍这个包比较好用所以别的我就没有学嘻嘻</del></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Gson gson &#x3D; new Gson();</span><br></pre></td></tr></table></figure>
+
+<p>这个创建一个gson对象这样可以将一个类的信息和JSON文件信息相互转换（也许是我还没有尝试把一个JSON文件信息转换成类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">JsonObject newSchool = <span class="keyword">new</span> JsonObject();</span><br><span class="line">newSchool.addProperty(<span class="string">&quot;school name&quot;</span>,<span class="string">&quot;newschool&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>实例化一个jsonObject，这样就可在这个对象上创建JSON实例，比如我可以addProperty创建一个school  name信息，并给他赋值。这就很想HashMap键值配对</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">JsonArray stuArr = <span class="keyword">new</span> JsonArray();</span><br><span class="line">JsonArray stuArr2 = <span class="keyword">new</span> JsonArray();</span><br><span class="line">String stu1 = gson.toJson(student1)+<span class="string">&quot;,&quot;</span>+gson.toJson(student2);</span><br><span class="line">String stu2 = gson.toJson(student3)+<span class="string">&quot;,&quot;</span>+gson.toJson(student4);</span><br><span class="line">stuArr.add(stu1);</span><br><span class="line">stuArr2.add(stu2);</span><br></pre></td></tr></table></figure>
+
+<p>我尝试着做两个学生JSON数组，</p>
+<p>很明显是做出来了</p>
+<p>但是效果不是很感觉QAQ</p>
+<p>因为在我尝试把学生数组插入给教师</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">objTeacher1.add(<span class="string">&quot;student&quot;</span>,stuArr);</span><br><span class="line">objTeacher2.add(<span class="string">&quot;student&quot;</span>,stuArr2);</span><br><span class="line">newSchool.addProperty(<span class="string">&quot;teacher&quot;</span>, gson.toJson(objTeacher1));</span><br><span class="line">newSchool.addProperty(<span class="string">&quot;teacher&quot;</span>, gson.toJson(objTeacher2));</span><br></pre></td></tr></table></figure>
+
+<p>失败了，好像是两个学生数组插入到一个老师里面了</p>
+<p>而且整个school里面我创建了2个老师，但是最后输出却只有1个老师</p>
+<p>无所谓了以后再说</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">&quot;GsonTest.json&quot;</span>);</span><br><span class="line">FileWriter writer = <span class="keyword">new</span> FileWriter(file);</span><br><span class="line">writer.append(gson.toJson(newSchool));</span><br><span class="line">writer.close();</span><br></pre></td></tr></table></figure>
+
+<p>笑死，根本不会文件读写</p>
+<h1 id="JAVA-多线程"><a href="#JAVA-多线程" class="headerlink" title="JAVA 多线程"></a>JAVA 多线程</h1><p>然后就是多线程了</p>
+<p>根据网课给的一个生物系统生产者不断生产资源，和捕食者不断在生态系统中掠夺资源，形成一个动态资源。</p>
+<p>我自己写了一个存款人和取款人不断在一个银行里存款取款的方法。</p>
+<p>先是一个银行</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">double</span>[] accounts;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Lock bankLock = <span class="keyword">new</span> ReentrantLock();</span><br></pre></td></tr></table></figure>
+
+<p>accounts模拟一个银行多个账户，存款人和取款人各2个每个都是线程。</p>
+<p>//不是的上面是转账的，搞错了。用了普通的锁，也许在并发1里讲过了。</p>
+<p>下面的才是存款取款人</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> <span class="keyword">int</span> money;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> upperLimit;</span><br></pre></td></tr></table></figure>
+
+<p>volatile表示这个域每次改变 ，获得这个域的线程都能实时地变，不会出错。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">drawMoney</span><span class="params">(<span class="keyword">int</span> theMoney)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>((money - theMoney)&lt; <span class="number">0</span> )&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Money is not enough&quot;</span>);</span><br><span class="line">        wait();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    money -= theMoney;</span><br><span class="line">    System.out.print(Thread.currentThread().getName());</span><br><span class="line">    Bank.totalMoney();</span><br><span class="line">    notifyAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个就是取款人的取款动作，银行提供取钱功能给取款人使用。当钱不够想要取的钱的时候这个事件就会等待满足条件后再进行，wait()就是实现这个功能的。在功能最后，也就是取款完，唤醒其它可能存在的等待线程。例如因为<del>银行钱存满了</del> 而等待的存款人事件。告诉他们事情做完了，让调控器选择合适的线程进行启动。</p>
+<p>存款人和这个行为很像。</p>
+<p>然后在主函数启动4个线程就可以了嘻嘻。</p>
+<h2 id="excutor"><a href="#excutor" class="headerlink" title="excutor"></a>excutor</h2><p>一个设计好的线程池框架</p>
+<p>本来我自己想用普通的Thread的线程，实现6个线程计算10到1000的累加</p>
+<p>然后怎么算都是错的</p>
+<p>我放弃了</p>
+<p>然后看到了excutor框架</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(<span class="number">6</span>);</span><br><span class="line">List&lt;Future&lt;Double&gt;&gt; resultList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>第一个是确定线程池里最多有几个线程</p>
+<p>第二个是存放一个result的数组</p>
+<p>excutor和Runnable的区别就在于excutor需要覆盖的call方法可以有返回值，而run不需要。他们作为方法一个由excutor.submit提交就可以运行线程。而run由线程start开始运行。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">    Sumer sumer = <span class="keyword">new</span> Sumer(<span class="number">10</span>*i+<span class="number">1</span>,(i+<span class="number">1</span>)*<span class="number">10</span>);</span><br><span class="line">    Future&lt;Double&gt; result = executor.submit(sumer);</span><br><span class="line">    resultList.add(result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就能把结果存进数组里，然后要得到最终结果只需要遍历数组就可以了。</p>
+<h2 id="Fork-join"><a href="#Fork-join" class="headerlink" title="Fork-join"></a>Fork-join</h2><p>也许是这个框架，刚学，不熟，还没实现</p>
+<p>而且后面的多线程课程，我书本里更详细。</p>
+<p>就是条件控制定时和锁。书里先讲了这些。</p>
+<p>以后再说。</p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>-XML -多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JAVA 网络编程</title>
     <url>/2021/03/22/JAVA%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<p>再不写Blog我就都快忘记我学什么了。<br>安卓还没开始学QAQ<br>我明天白天要把多线程的书看完。<br>晚上继续学网课，在周末之前学完网课<br>体育要拍视频作业QAQAQAQAQAQAQAQAQAQAQ<br>网络编程写玩了是不是可以用SWING写个聊天软件？</p>
@@ -283,6 +283,26 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/03/11/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>welcome to markdownpad</title>
     <url>/2021/03/12/welcome-to-markdownpad/</url>
     <content><![CDATA[<h2 id="Welcome-to-MarkdownPad-2"><a href="#Welcome-to-MarkdownPad-2" class="headerlink" title="Welcome to MarkdownPad 2"></a>Welcome to MarkdownPad 2</h2><p><strong>MarkdownPad</strong> is a full-featured Markdown editor for Windows.</p>
@@ -308,25 +328,5 @@
       <tags>
         <tag>firts</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/03/11/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
 </search>
