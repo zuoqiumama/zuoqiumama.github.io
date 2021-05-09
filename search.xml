@@ -142,40 +142,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JAVA 并发（1）</title>
-    <url>/2021/03/12/JAVA%20%E5%B9%B6%E5%8F%91%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>3/12/2021 8:36:21 PM<br>3天解决并发入门，DAY1；<br>Android的书快到了，要加快学习进度了;<br>JAVA网课争取在第五周开始前完成并且实践了;</p>
-<span id="more"></span>
-
-<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程也就是任务，就是在一个程序中可以同时跑的多个任务，每个任务就是一个线程。一个线程从开始到结束一共有六种状态：<strong>New,Runnable,Blocked,Waiting,Timed Waiting,Terminated</strong></p>
-<h4 id="New"><a href="#New" class="headerlink" title="New:"></a>New:</h4><p>也就是新创建的线程，该线程还没有开始他的任务</p>
-<h4 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable:"></a>Runnable:</h4><p>在线程调用<code>start（）</code>后这个线程就是可运行状态了，这个状态的线程既可以是运行中的也可以是不运行中的。</p>
-<h4 id="Blocked-amp-Waiting"><a href="#Blocked-amp-Waiting" class="headerlink" title="Blocked&amp;Waiting:"></a>Blocked&amp;Waiting:</h4><p>这两个状态的线程都是活跃度极低的，消耗资源很少的线程。<strong>当某一个线程索取一个被其它线程所拥有的对象锁</strong>就会进入**<u>Blocked状态</u>**，该状态会一直持续到索取的锁被释放同时调度器允许该线程获得这个锁未知。</p>
-<p>而<strong>当线程在等待另一个线程向调度器通知条件时</strong>，会进入**<u>Waiting状态</u>**。这一状态会一直持续到超时期满或者接收到适当通知。</p>
-<h4 id="Terminated"><a href="#Terminated" class="headerlink" title="Terminated:"></a>Terminated:</h4><p>这种状态的线程出现在<strong>线程正常运行完</strong>或者因为一个<strong>没有捕获的异常而退出</strong>。</p>
-<p><del>在很久以前有一个<code>stop()</code>方法可以由一个线程调用去杀死另一个线程</del></p>
-<h3 id="普通单任务程序和利用了线程的程序的区别："><a href="#普通单任务程序和利用了线程的程序的区别：" class="headerlink" title="普通单任务程序和利用了线程的程序的区别："></a>普通单任务程序和利用了线程的程序的区别：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Ball ball = <span class="keyword">new</span> Ball();</span><br><span class="line">    comp.add(ball);</span><br><span class="line">    Runnable r = ()-&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; STEPS; i++) &#123;</span><br><span class="line">                ball.move(comp.getBounds());</span><br><span class="line">                comp.paint(comp.getGraphics());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(DELAY);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    Thread t = <span class="keyword">new</span> Thread(r);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个是利用了线程的程序，当主程序调用时创建的框架会初始化两个按钮</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BounceFrame</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    comp = <span class="keyword">new</span> BallComponent();</span><br><span class="line">    setTitle(<span class="string">&quot;bounceTest&quot;</span>);</span><br><span class="line">    add(comp, BorderLayout.CENTER);</span><br><span class="line"></span><br><span class="line">    JPanel buttonPanel = <span class="keyword">new</span> JPanel();</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;start&quot;</span>, e -&gt; addBall());</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;close&quot;</span>, e -&gt; System.exit(<span class="number">0</span>));</span><br><span class="line">    add(buttonPanel, BorderLayout.SOUTH);</span><br><span class="line"></span><br><span class="line">    pack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>start按钮触发后，会添加一个球绘进框架，而这个球会持续移动直到次数大于STEPS，当次数超过后线程便结束了，每次点击一次start就run一个线程。而单任务则是直接循环绘画这个球弹跳，没跳完也不会停止</p>
-<h3 id="关于线程终止："><a href="#关于线程终止：" class="headerlink" title="关于线程终止："></a>关于线程终止：</h3><p>当对一个线程调用<code>inerrupt()</code>时，这个线程就会进入中断状态。每个线程都有关于中断状态的标志，<strong>每个线程都应该时不时检查这个标志</strong>。要想判断一个线程是否进入中断状态可以通过</p>
-<p><code>Tread.currentTread().isInterrupted()</code>的方法来进行检查。</p>
-<p>但是如果线程被阻塞了再检查中断状态就会产生InterruptedException异常。当在一个sleep的线程上调用<code>interrupt（）</code>的方法，就会被这个异常中断。在处理这个异常的时候有两种方法</p>
-<p>一：</p>
-<p>可以在catch内<code>Tread.currentTread().interrupt()</code>终止线程</p>
-<p>二：</p>
-<p>在方法名上面进行throw InterruptedException让方法调用者捕获这个异常</p>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JAVA XML文件读写（1）</title>
     <url>/2021/03/16/JAVA%20XML%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%EF%BC%881%EF%BC%89/</url>
     <content><![CDATA[<p>昨天晚上浪费时间搞了一晚上的安卓开发环境<br>本来下个加速器就能完事的我TM东搞西搞搞了将近3个小时<br>安卓等学到JAVA WEB的时候一起看好了，现在先把进阶学完<br>明天尽可能学到多线程QAQ，<br>书我是一点都看不进去了中文翻译的太离谱了</p>
@@ -231,6 +197,102 @@
       <tags>
         <tag>XML</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>JAVA JDBC编程</title>
+    <url>/2021/04/29/JAVA%20JDBC%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<p>这个网站我终于可以COMMIT文章了呜呜呜好感动<br>明明是自己做的还不能更新就太痛苦了<br>不过拿回来了挺开心的。<br>已经完成了JDBC的学习了，应该很早之前完成的结果拖到现在。。<br>安卓学习也只是学习到了UI有点慢而且最近也没在学，<br>今天下午荒废了一下午收复异闻带<br>下周开始要天天学6级了呜呜，然后我也开始JAVA web的学习了，争取自己写一个博客网站不用GitHub的嘻嘻嘻嘻嘻</p>
+<h1 id="JAVA-JDBC编程"><a href="#JAVA-JDBC编程" class="headerlink" title="JAVA JDBC编程"></a>JAVA JDBC编程</h1><p>没什么好说的JDBC就3个东西吧？</p>
+<h2 id="创建连接"><a href="#创建连接" class="headerlink" title="创建连接"></a>创建连接</h2><p>首先就是要创建和数据库的连接</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">connectSQL</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Connection conn = <span class="keyword">null</span>;</span><br><span class="line">    InputStream in = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">    in = ClassLoader.getSystemClassLoader().getResourceAsStream(<span class="string">&quot;register.properties&quot;</span>);</span><br><span class="line">    Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line"></span><br><span class="line">        properties.load(in);</span><br><span class="line"></span><br><span class="line">        String url = (String) properties.get(<span class="string">&quot;url&quot;</span>);</span><br><span class="line">        String username = (String) properties.get(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">        String password = (String) properties.get(<span class="string">&quot;password&quot;</span>);</span><br><span class="line">        String driver = (String) properties.get(<span class="string">&quot;driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Class.forName(driver);</span><br><span class="line"></span><br><span class="line">        conn = DriverManager.getConnection(url,username,password);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> conn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而propertie就是自己配置的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">url&#x3D;jdbc:sqlserver:&#x2F;&#x2F;localhost:1433;databaseName&#x3D;JDBCtest</span><br><span class="line">username&#x3D;sa</span><br><span class="line">password&#x3D;zihuaizuishuai12</span><br><span class="line">driver&#x3D;com.microsoft.sqlserver.jdbc.SQLServerDriver</span><br></pre></td></tr></table></figure>
+
+<p>大概是这样，只要配置好了就获取内容创建连接即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">closeConnection</span><span class="params">(Connection conn, PreparedStatement statement,ResultSet resultSet)</span></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(statement != <span class="keyword">null</span>)&#123;</span><br><span class="line">            statement.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(conn != <span class="keyword">null</span>)&#123;</span><br><span class="line">            conn.close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(resultSet != <span class="keyword">null</span>)&#123;</span><br><span class="line">            resultSet.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException throwables) &#123;</span><br><span class="line">        throwables.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>统一关闭和数据库连接的东西，比如连接、statement、结果集。</p>
+<p>剩下的就是增删改查的操作了</p>
+<h3 id="增删改"><a href="#增删改" class="headerlink" title="增删改"></a>增删改</h3><p>这几个都可以用update（）表示</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Connection conn, String sql , Object...args)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    PreparedStatement statement = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        statement = conn.prepareStatement(sql);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i&lt; args.length;i++)&#123;</span><br><span class="line">            statement.setObject(i+<span class="number">1</span>,args[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        statement.execute();</span><br><span class="line">        statement.close();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只需要往传进来的SQL语句里配置占位符数据即可，这个FOR循环干的就是逐个配置占位符，然后提交就可以完成增删改的操作。</p>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><p>这个稍微难一点，会用到反射的知识点，知道反射怎么用，但要自己完全没帮助的情况下想到用反射获取泛型类的创建和设置泛型类内的属性值就挺难的，而且这个泛型类还要通过子类对象获取父类（本类）泛型参数：<!--这是因为如果实例化子类对象，在初始化的时候父类初始化函数的this指向的是子类对象，因为没有父类对象被创建||--></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseDao</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Class&lt;T&gt; clazz = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获得此对象的直接超类，因为初始化的是继承BaseDao的类,所以this获得的是初始化的类，再获得超类 也就是继承的BaseDao&lt;Users&gt;</span></span><br><span class="line">        Type superClass = <span class="keyword">this</span>.getClass().getGenericSuperclass();</span><br><span class="line">        <span class="comment">//获得实际的参数化类型，也就是含泛型类型的？</span></span><br><span class="line">        ParameterizedType parameterizedType = (ParameterizedType) superClass;</span><br><span class="line">        <span class="comment">//获取父类的泛型列表</span></span><br><span class="line">        Type[] typeArguments = parameterizedType.getActualTypeArguments();</span><br><span class="line">        <span class="comment">//获取泛型列表的第一个参数，也就是传进来的T</span></span><br><span class="line">        clazz = (Class&lt;T&gt;) typeArguments[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个就是获取父类泛型参数的过程</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span>  List&lt;T&gt; <span class="title">select</span><span class="params">(Connection conn , String sql , Object...args)</span> <span class="keyword">throws</span> SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException </span>&#123;</span><br><span class="line">    PreparedStatement statement = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        statement = conn.prepareStatement(sql);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; args.length; i++) &#123;</span><br><span class="line">            statement.setObject(i + <span class="number">1</span>, args[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        ResultSet resultSet =  statement.executeQuery();</span><br><span class="line">        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();</span><br><span class="line">        <span class="keyword">int</span> colnum = resultSetMetaData.getColumnCount();</span><br><span class="line">        List&lt;T&gt; userlist = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">        <span class="keyword">while</span> (resultSet.next()) &#123;</span><br><span class="line">            T t = clazz.getDeclaredConstructor().newInstance();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; colnum; j++) &#123;</span><br><span class="line">                Object colValue = resultSet.getObject(j + <span class="number">1</span>);</span><br><span class="line">                String colName = resultSetMetaData.getColumnName(j + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">//反射技术获得属性名是COLNAME的user属性</span></span><br><span class="line">                Field field = Users.class.getDeclaredField(colName);</span><br><span class="line">                <span class="comment">//让这个属性可达</span></span><br><span class="line">                field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                <span class="comment">//对user的这个属性赋值COLVALUE</span></span><br><span class="line">                field.set(t, colValue);</span><br><span class="line">            &#125;</span><br><span class="line">            userlist.add(t);</span><br><span class="line">        &#125;</span><br><span class="line">        statement.close();</span><br><span class="line">        <span class="keyword">return</span> userlist;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个就是用一个列表保存搜寻的结果，因为考虑到无论是多少个结果，只要在List里面取就行了，所以没有专门写关于获取一个对象或特定结果的函数，这里面也用到了反射，不过是为了让结果集获取到的结果能赋值给新创建的对象。具体可以见注释</p>
+<p>JDBC的内容大概就这些，稍微难点的就是想到 用反射解决问题的思路。</p>
+<p><del>我现在也还是想不通</del>主要这几个函数的文档全英文不能完全看懂。</p>
+<h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><p>这个连接池就很像线程池，我清楚我知道这个。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SQLPoolConnector</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DataSource dataSource = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        InputStream inputStream = ClassLoader.getSystemResourceAsStream(<span class="string">&quot;druid.properties&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            properties.load(inputStream);</span><br><span class="line">            dataSource = DruidDataSourceFactory.createDataSource(properties);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">createConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        Connection conn = dataSource.getConnection();</span><br><span class="line">        <span class="keyword">return</span> conn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>依然使用properties来传入用户信息进行数据库连接，</p>
+<p>然后就是用现成的类库函数实现增删改查的操作了。</p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>-JDBC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JAVA 并发（1）</title>
+    <url>/2021/03/12/JAVA%20%E5%B9%B6%E5%8F%91%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>3/12/2021 8:36:21 PM<br>3天解决并发入门，DAY1；<br>Android的书快到了，要加快学习进度了;<br>JAVA网课争取在第五周开始前完成并且实践了;</p>
+<span id="more"></span>
+
+<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程也就是任务，就是在一个程序中可以同时跑的多个任务，每个任务就是一个线程。一个线程从开始到结束一共有六种状态：<strong>New,Runnable,Blocked,Waiting,Timed Waiting,Terminated</strong></p>
+<h4 id="New"><a href="#New" class="headerlink" title="New:"></a>New:</h4><p>也就是新创建的线程，该线程还没有开始他的任务</p>
+<h4 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable:"></a>Runnable:</h4><p>在线程调用<code>start（）</code>后这个线程就是可运行状态了，这个状态的线程既可以是运行中的也可以是不运行中的。</p>
+<h4 id="Blocked-amp-Waiting"><a href="#Blocked-amp-Waiting" class="headerlink" title="Blocked&amp;Waiting:"></a>Blocked&amp;Waiting:</h4><p>这两个状态的线程都是活跃度极低的，消耗资源很少的线程。<strong>当某一个线程索取一个被其它线程所拥有的对象锁</strong>就会进入**<u>Blocked状态</u>**，该状态会一直持续到索取的锁被释放同时调度器允许该线程获得这个锁未知。</p>
+<p>而<strong>当线程在等待另一个线程向调度器通知条件时</strong>，会进入**<u>Waiting状态</u>**。这一状态会一直持续到超时期满或者接收到适当通知。</p>
+<h4 id="Terminated"><a href="#Terminated" class="headerlink" title="Terminated:"></a>Terminated:</h4><p>这种状态的线程出现在<strong>线程正常运行完</strong>或者因为一个<strong>没有捕获的异常而退出</strong>。</p>
+<p><del>在很久以前有一个<code>stop()</code>方法可以由一个线程调用去杀死另一个线程</del></p>
+<h3 id="普通单任务程序和利用了线程的程序的区别："><a href="#普通单任务程序和利用了线程的程序的区别：" class="headerlink" title="普通单任务程序和利用了线程的程序的区别："></a>普通单任务程序和利用了线程的程序的区别：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Ball ball = <span class="keyword">new</span> Ball();</span><br><span class="line">    comp.add(ball);</span><br><span class="line">    Runnable r = ()-&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; STEPS; i++) &#123;</span><br><span class="line">                ball.move(comp.getBounds());</span><br><span class="line">                comp.paint(comp.getGraphics());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(DELAY);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    Thread t = <span class="keyword">new</span> Thread(r);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个是利用了线程的程序，当主程序调用时创建的框架会初始化两个按钮</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BounceFrame</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    comp = <span class="keyword">new</span> BallComponent();</span><br><span class="line">    setTitle(<span class="string">&quot;bounceTest&quot;</span>);</span><br><span class="line">    add(comp, BorderLayout.CENTER);</span><br><span class="line"></span><br><span class="line">    JPanel buttonPanel = <span class="keyword">new</span> JPanel();</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;start&quot;</span>, e -&gt; addBall());</span><br><span class="line">    addButton(buttonPanel, <span class="string">&quot;close&quot;</span>, e -&gt; System.exit(<span class="number">0</span>));</span><br><span class="line">    add(buttonPanel, BorderLayout.SOUTH);</span><br><span class="line"></span><br><span class="line">    pack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>start按钮触发后，会添加一个球绘进框架，而这个球会持续移动直到次数大于STEPS，当次数超过后线程便结束了，每次点击一次start就run一个线程。而单任务则是直接循环绘画这个球弹跳，没跳完也不会停止</p>
+<h3 id="关于线程终止："><a href="#关于线程终止：" class="headerlink" title="关于线程终止："></a>关于线程终止：</h3><p>当对一个线程调用<code>inerrupt()</code>时，这个线程就会进入中断状态。每个线程都有关于中断状态的标志，<strong>每个线程都应该时不时检查这个标志</strong>。要想判断一个线程是否进入中断状态可以通过</p>
+<p><code>Tread.currentTread().isInterrupted()</code>的方法来进行检查。</p>
+<p>但是如果线程被阻塞了再检查中断状态就会产生InterruptedException异常。当在一个sleep的线程上调用<code>interrupt（）</code>的方法，就会被这个异常中断。在处理这个异常的时候有两种方法</p>
+<p>一：</p>
+<p>可以在catch内<code>Tread.currentTread().interrupt()</code>终止线程</p>
+<p>二：</p>
+<p>在方法名上面进行throw InterruptedException让方法调用者捕获这个异常</p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/03/11/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>JAVA 网络编程</title>
@@ -308,25 +370,5 @@
       <tags>
         <tag>firts</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/03/11/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
 </search>
