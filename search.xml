@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Reason for Future, Act for Now - A Principled Framework for Autonomous LLM Agents with Provable Sample Efficiency</title>
+      <link href="/2024/03/23/RAFA/"/>
+      <url>/2024/03/23/RAFA/</url>
+      
+        <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>LLM具有很强的推理能力，但是在现实世界中，将推理转变为行动依然存在着一定的问题。LLM从预训练中获得了大量的先验知识，但在现实世界中它本质上依然是无状态无根据，因此采取的决策往往不是最优的。为了解决这一问题，就使用外部反馈来迭代优化行动。</p><blockquote><p>似乎是会引入强化学习方面的知识，最近强化学习的课也在学马尔可夫决策，最优策略、最优价值什么的。看了导言说是用prompt模板作为驱动，依据外部反馈的历史信息更新prompt，再由prompt驱动决策产生和优化，感觉像这个形式，如果是这样的话其实我写的小说创作大模型的生成过程和这一框架非常地接近</p></blockquote><p>他们特别考虑了样本效率这一因素，也就是他们的目标是让智能体在与环境少交互的情况下依然能完成给定任务。</p><p>强化学习确实在引言部分被提到了，说强化学习技术与大模型由于种种原因存在一定差异</p><blockquote><p>强化学习技术在数字系统中，而大模型则是语法系统<br>大模型由通用语料库训练，强化学习则在反馈与迭代中学习</p></blockquote><p>看了一下框架图，这个框架主要由2个部分组成，一个外部memory buffer,一个agent, agent内部又包含有学习以及推理两个部分，学习是通过外部记忆缓存输入到prompt然后又大模型更新基于外界反馈的后验知识然后生成价值函数或者奖励转换模型，再将这一结果送到推理模块，依据价值函数或奖励模型产生一个树状的决策过程（？）然后选择价值最大的决策过程，并在其中选择下一步的行动立即行动，并将外部结果转存到外部记忆中。</p><blockquote><p>通过一次生成长远的决策过程，每次依据外界环境对当前决策进行优化，来避免频繁地与外部环境交互</p></blockquote><p>然后就是一些相关技术的介绍，比如大模型和in-context learning</p><blockquote><p>in-context learning就是一种让大模型仅通过观察给定的一系列例子（即上下文）来学习和执行新的任务，而无需外部的参数更新或显式的训练过程。<br>贝叶斯框架下的强化学习，大模型各种形式的推理、以及与外部环境交互的闭环框架等等，以及这些内容与RAFA的联系</p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 大模型论文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>从0构建GPT</title>
       <link href="/2024/03/21/small-gpt/"/>
       <url>/2024/03/21/small-gpt/</url>
