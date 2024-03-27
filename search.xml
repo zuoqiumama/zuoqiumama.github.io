@@ -8,7 +8,7 @@
       <link href="/2024/03/27/%E6%99%BA%E8%83%BD%E8%AE%A1%E7%AE%97%E5%AE%9E%E9%AA%8C%E4%BA%8C/"/>
       <url>/2024/03/27/%E6%99%BA%E8%83%BD%E8%AE%A1%E7%AE%97%E5%AE%9E%E9%AA%8C%E4%BA%8C/</url>
       
-        <content type="html"><![CDATA[<p>先睡午觉晚上再说，等会上课调研一下那个李学龙的东西</p><h1 id="卷积层的实现"><a href="#卷积层的实现" class="headerlink" title="卷积层的实现"></a>卷积层的实现</h1><h1 id="池化层的实现"><a href="#池化层的实现" class="headerlink" title="池化层的实现"></a>池化层的实现</h1><h1 id="flatten层的实现"><a href="#flatten层的实现" class="headerlink" title="flatten层的实现"></a>flatten层的实现</h1>]]></content>
+        <content type="html"><![CDATA[<p>上午在写多智能体作业<br>先睡午觉晚上再说，等会上课调研一下那个李学龙的东西</p><h1 id="卷积层的实现"><a href="#卷积层的实现" class="headerlink" title="卷积层的实现"></a>卷积层的实现</h1><h1 id="池化层的实现"><a href="#池化层的实现" class="headerlink" title="池化层的实现"></a>池化层的实现</h1><h1 id="flatten层的实现"><a href="#flatten层的实现" class="headerlink" title="flatten层的实现"></a>flatten层的实现</h1>]]></content>
       
       
       
@@ -65,9 +65,15 @@
       <link href="/2024/03/21/page/"/>
       <url>/2024/03/21/page/</url>
       
-        <content type="html"><![CDATA[<h1 id="构建大模型"><a href="#构建大模型" class="headerlink" title="构建大模型"></a>构建大模型</h1><p>终于开始要清空B站收藏夹关于大模型的视频了<br>收藏 &#x3D;&#x3D; 看过的不等式要主动划掉</p><p>在周二的时候我就看了一会<a href="https://www.bilibili.com/video/BV1vp421o7Ys?vd_source=4414e7cb68c1443baf8d60ed1c992278">《从零开始用Python搭建LLM模型|Create a LLM from Scratch with Python – Tutorial》</a></p><p>讲的很细致，很多基础的代码都会带你试验一遍。</p><p>然后在周三的时候是炉石新版本，我就没有学习，<br>新版本的触萨可以说是很有意思了，养触手到10法术之后就会只出打对面3和打10召10两张卡，非常有实力。但是稳定性挺差劲的，要想上分我觉得还是搞一个污手骑比较好。这个晚上再说，</p><p>现在就是继续看从0构建LLM争取让自己对LLM的内部有一定的了解，然后看看关于huggingface开源大模型如何构建应用扩充一下知识面。</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="构建大模型"><a href="#构建大模型" class="headerlink" title="构建大模型"></a>构建大模型</h1><p>终于开始要清空B站收藏夹关于大模型的视频了<br>收藏 &#x3D;&#x3D; 看过的不等式要主动划掉</p><p>在周二的时候我就看了一会<a href="https://www.bilibili.com/video/BV1vp421o7Ys?vd_source=4414e7cb68c1443baf8d60ed1c992278">《从零开始用Python搭建LLM模型|Create a LLM from Scratch with Python – Tutorial》</a></p><p>讲的很细致，很多基础的代码都会带你试验一遍。</p><p>然后在周三的时候是炉石新版本，我就没有学习，<br>新版本的触萨可以说是很有意思了，养触手到10法术之后就会只出打对面3和打10召10两张卡，非常有实力。但是稳定性挺差劲的，要想上分我觉得还是搞一个污手骑比较好。这个晚上再说，</p><p>现在就是继续看从0构建LLM争取让自己对LLM的内部有一定的了解，然后看看关于huggingface开源大模型如何构建应用扩充一下知识面。</p><h1 id="todo"><a href="#todo" class="headerlink" title="todo"></a>todo</h1><ul><li>[ ]对自己构建地LLM进行训练</li><li>[ ]看一下课程ppt</li></ul>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> 学习日常 </tag>
+            
+        </tags>
       
     </entry>
     
