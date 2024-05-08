@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>page</title>
+      <link href="/2024/05/08/page/"/>
+      <url>/2024/05/08/page/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Survey-on-Large-Language-Model-Enhanced-Reinforcement-Learning-Concept-Taxonomy-and-Methods"><a href="#Survey-on-Large-Language-Model-Enhanced-Reinforcement-Learning-Concept-Taxonomy-and-Methods" class="headerlink" title="Survey on Large Language Model-Enhanced Reinforcement Learning: Concept, Taxonomy, and Methods"></a>Survey on Large Language Model-Enhanced Reinforcement Learning: Concept, Taxonomy, and Methods</h1><p>又要看综述了，现在感觉下来RL和LLM的结合可以从两方面来看</p><ul><li>从LLM角度看，LLM本身也就只是文本输入文本输出，想要做更多的事，想要更好利用LLM的能力，就要有一个算法让它能够做能过扩展它的能力，也就是RL</li><li>从RL角度看，RL本身存在着很多问题，就将LLM引入看看能不能解决这方面的问题</li></ul><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="RL"><a href="#RL" class="headerlink" title="RL"></a>RL</h3><ul><li><p>存在哪些问题<br>当需要处理语言与视觉信息的时候 deep RL面临问题</p><blockquote><p>表示学习和RL解耦，分开学习减少RL的负担<br>使用NLP技术处理语言问题</p></blockquote><ol><li>采样效率</li><li>反馈函数设计<br>   奖励函数设计非常复杂，特别是在复杂环境和稀疏奖励环境（围棋），有可能设计次优函数或者引起agent意料之外的行为</li><li>泛化性<br>   原因在于难以迁移RL已经学习的知识或者技能到一个新的未见过的场景中<br>   通常在一个设定好的环境中进行训练</li><li>基于模型规划中的复合误差<br>   随着预测范围的延申，预测的误差不断累积，导致与最佳轨迹存在显著偏差</li></ol></li><li><p>多模态强化学习<br>使用视觉信息或者文本作为RL的观察空间、或者RL与环境交互过程中可能使用自然语言</p></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>paper reading</title>
       <link href="/2024/04/30/page/"/>
       <url>/2024/04/30/page/</url>
