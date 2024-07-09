@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>electron_example</title>
+      <link href="/2024/07/09/electron-example/"/>
+      <url>/2024/07/09/electron-example/</url>
+      
+        <content type="html"><![CDATA[<h1 id="开始学习一下桌面软件开发了"><a href="#开始学习一下桌面软件开发了" class="headerlink" title="开始学习一下桌面软件开发了"></a>开始学习一下桌面软件开发了</h1><p>本来计划是本科的时候学的，但是那个时候没有考虑过工作这个选项而且在准备考研的东西焦头烂额的<br><del>当然主要是因为那会不知道要做一个什么东西</del><br>现在知道想做什么了，我想用electron做一个桌面平台，作为电脑agent调用或者是小工具什么的。</p><p>正在跟着electron的文档学习如何做呢</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 学习日常 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>多媒体作业</title>
+      <link href="/2024/07/04/%E5%A4%9A%E5%AA%92%E4%BD%93%E4%BD%9C%E4%B8%9A/"/>
+      <url>/2024/07/04/%E5%A4%9A%E5%AA%92%E4%BD%93%E4%BD%9C%E4%B8%9A/</url>
+      
+        <content type="html"><![CDATA[<h1 id="MP5-A-Multi-modal-Open-ended-Embodied-System-in-Minecraft-via-Active-Perception"><a href="#MP5-A-Multi-modal-Open-ended-Embodied-System-in-Minecraft-via-Active-Perception" class="headerlink" title="MP5: A Multi-modal Open-ended Embodied System in Minecraft via Active Perception"></a>MP5: A Multi-modal Open-ended Embodied System in Minecraft via Active Perception</h1><p>我要介绍的文献是一个多模态具身系统通过主动感知方法完成我的世界中的任务</p><p>首先我想说明一下这个方法提出的背景。</p><h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>构建能够解决长期开放世界具身任务、接近人类行为模式的通才智能体具有一定困难，某个任务中需要的物体（内容依赖），或者子任务之间的时序关系（过程依赖）阻碍了agent。<br>同时先前的解决方案中感知模块是近乎全知而不是有选择的，同时感知模块与其它模块的接口并不完全统一</p><p>这个方法的框架大致是由以下几个模块构成。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><strong>parser</strong> 将长任务分解成短的一步步完成的子任务<br><strong>percipient</strong> 为其它模块回答关于环境的各类问题，通常与内容信息相关<br><strong>planner</strong> 根据当前情况给出动作序列并优化<br><strong>performer</strong> 执行动作与环境交互<br><strong>patroller</strong> 检测除了parser模块外的回复，来验证当前计划&#x2F;行动，用以改善规划技巧同时改进动作执行</p><p>parser和planner有额外的记忆增强</p><p>执行的流程大致就是，给定一个任务，由parser将任务翻译成一系列需要完成的过程序列，也就是游戏中要达成目标需要按顺序获取哪些物体，<br>然后将该序列交给planner，planner会向patroller询问关于环境的信息，patroller依据任务要求向percipient进行询问，这一过程称为主动感知。然后percipient将环境描述告诉patroller，<br>patroller依据任务要求将环境描述与任务对齐将观察告诉planner，planner就会给出一系列的任务给performer，performer就会向patroller进行询问，在其指导下完成每个任务的动作，同时将动作结果反馈给patroller，<br>如果任务结束（序列结束，或者存在失败的反馈），patroller就会向planner要求重新规划任务。</p><p>那么关于实验结果呢</p><h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>主要进行了内容依赖、流程依赖以及消融的实验，实验表明了MP5在开放世界中任务完成率都是最佳的<br>但是依然存在困难任务完成率较为低下的情况</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 学习日常 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>人生最后的校园时光</title>
       <link href="/2024/06/24/%E4%BA%BA%E7%94%9F%E6%9C%80%E5%90%8E%E7%9A%84%E6%A0%A1%E5%9B%AD%E6%97%B6%E5%85%89/"/>
       <url>/2024/06/24/%E4%BA%BA%E7%94%9F%E6%9C%80%E5%90%8E%E7%9A%84%E6%A0%A1%E5%9B%AD%E6%97%B6%E5%85%89/</url>
