@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>vue_Start</title>
+      <link href="/2024/07/13/vue-Start/"/>
+      <url>/2024/07/13/vue-Start/</url>
+      
+        <content type="html"><![CDATA[<h1 id="突然觉得学习路线需要改变一下"><a href="#突然觉得学习路线需要改变一下" class="headerlink" title="突然觉得学习路线需要改变一下"></a>突然觉得学习路线需要改变一下</h1><p>突然觉得electron可能只是一个外部包装工具，内部怎么写还是需要学一些前端的框架<br>然后就开始vue3的学习了</p><p>首先就是需要创建一个vue项目,安装项目依赖，然后启动项目吧</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm create vue@latest</span><br><span class="line">npm i</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>electron_example</title>
       <link href="/2024/07/09/electron-example/"/>
       <url>/2024/07/09/electron-example/</url>
